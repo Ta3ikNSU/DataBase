@@ -1,37 +1,39 @@
 package ta3ikdb.entitys;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
-@Table(name = "DETAIL")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "announcementid")
+    @OneToOne
     private Announcement announcement;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "old_announcementid")
-    private List<OldAnnouncement> oldAnnouncement = new ArrayList<>();
+    @OneToMany
+    @Column
+    private List<Announcement> oldAnnouncement = new ArrayList<>();
 
-    @Column(name = "type")
+    @Column
     private Integer type;
 
-    @Column(name = "brand", length = 36)
+    @Column
     private String brand;
 
-    @Column(name = "model", length = 36)
+    @Column
     private String model;
 
-    @Column(name = "status")
+    @Column
     private String status;
 }

@@ -1,29 +1,36 @@
 package ta3ikdb.entitys;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.Instant;
 
-@Data
 @Entity
-@Table(name = "ANNOUNCEMENT")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column
     private Long id;
 
-    @Column(name = "region")
+    @Column
     private Integer region;
 
-    @Column(name = "date")
-    private Instant date;
+    @Column
+    private Timestamp start_date;
 
-    @Column(name = "status")
+    @Column
+    private Timestamp close_date;
+
+    @Column
     private Integer status;
 
-    @Column(name = "price")
+    @Column
     private Long price;
 
 }

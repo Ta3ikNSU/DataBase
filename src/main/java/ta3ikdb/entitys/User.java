@@ -1,37 +1,30 @@
 package ta3ikdb.entitys;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
-@Data
 @Entity
-@Table(name = "USER")
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "registerdate", nullable = false)
-    private Timestamp registerdate;
+    @Column(unique = true)
+    private String mail;
 
-    @Column(name = "nickname", nullable = false, length = 36)
-    private String nickname;
+    @Column
+    private String password;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "favoriteannouncementid")
-    private List<OldAnnouncement> favoriteAnnouncement = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "old_announcementids")
-    private List<OldAnnouncement> oldAnnouncements = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "announcementids")
-    private List<Announcement> Announcement = new ArrayList<>();
+    public User(String mail, String password) {
+        this.mail = mail;
+        this.password = password;
+    }
 }

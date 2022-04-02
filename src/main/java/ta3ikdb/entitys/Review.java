@@ -1,26 +1,27 @@
 package ta3ikdb.entitys;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-
-@Data
 @Entity
-@Table(name = "REVIEW")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column
     private Long id;
 
-    @Column(name = "authorid", nullable = false)
-    private Long authorid;
+    @Column
+    private Long authorId;
 
-    @Column(name = "grade", nullable = false)
+    @Column
     private Integer grade;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "carid", nullable = false)
+    @ManyToOne
     private Car car;
 
 }

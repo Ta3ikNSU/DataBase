@@ -10,17 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AutoController {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    public AutoController() {
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
-    }
-
-    @GetMapping("/{brand}/{model}")
-    public String getCars(@PathVariable String brand, @PathVariable String model) {
-
-    }
 }

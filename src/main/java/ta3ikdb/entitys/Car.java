@@ -1,58 +1,59 @@
 package ta3ikdb.entitys;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-@Data
 @Entity
-@Table(name = "CAR")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "announcementid")
+    @OneToOne
     private Announcement announcement;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @Column(name = "old_announcementid")
-    private List<OldAnnouncement> oldAnnouncement = new ArrayList<>();
+    @OneToMany
+    @Column
+    private List<Announcement> oldAnnouncement = new ArrayList<>();
 
-    @Column(name = "brand", nullable = false, length = 36)
+    @Column
     private String brand;
 
-    @Column(name = "model", nullable = false, length = 36)
+    @Column
     private String model;
 
-    @Column(name = "transmission")
+    @Column
     private Integer transmission;
 
-    @Column(name = "gear")
+    @Column
     private Integer gear;
 
-    @Column(name = "engine_capacity")
+    @Column
     private Integer engineCapacity;
 
-    @Column(name = "engine_power")
+    @Column
     private Integer enginePower;
 
-    @Column(name = "color", length = 36)
+    @Column
     private String color;
 
-    @Column(name = "mileage", length = 36)
+    @Column
     private String mileage;
 
-    @Column(name = "performance")
+    @Column
     private Integer performance;
 
-    @Column(name = "vin_number")
+    @Column
     private Long vinNumber;
 
-    @Column(name = "description")
+    @Column
     private String description;
 }
