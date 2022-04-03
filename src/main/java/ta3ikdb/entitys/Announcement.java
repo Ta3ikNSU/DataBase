@@ -28,9 +28,16 @@ public class Announcement {
     private Timestamp close_date;
 
     @Column
-    private Integer status;
+    private AnnouncementState status;
 
     @Column
     private Long price;
 
+
+    public Announcement(Integer region, AnnouncementState status, Long price){
+        this.region =region;
+        this.status = status;
+        this.price = price;
+        this.start_date = new Timestamp(System.currentTimeMillis());
+    }
 }

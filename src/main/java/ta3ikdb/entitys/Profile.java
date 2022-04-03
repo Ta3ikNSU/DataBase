@@ -34,5 +34,10 @@ public class Profile {
 
     @Column
     @OneToMany
-    private List<Announcement> Announcement = new ArrayList<>();
+    private List<Announcement> announcements = new ArrayList<>();
+
+    public Profile(String nickname) {
+        this.nickname = nickname;
+        this.register_date = new Timestamp(System.currentTimeMillis());
+    }
 }

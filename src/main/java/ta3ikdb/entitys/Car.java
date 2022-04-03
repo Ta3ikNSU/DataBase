@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -43,7 +44,7 @@ public class Car {
     private Integer enginePower;
 
     @Column
-    private String color;
+    private Integer color;
 
     @Column
     private String mileage;
@@ -56,4 +57,31 @@ public class Car {
 
     @Column
     private String description;
+
+    public Car(Announcement announcement,
+               String brand,
+               String model,
+               Integer transmission,
+               Integer gear,
+               Integer engineCapacity,
+               Integer enginePower,
+               Integer color,
+               String mileage,
+               Integer performance,
+               Long vinNumber,
+               String description
+    ) {
+        this.announcement = announcement;
+        this.brand = brand;
+        this.model = model;
+        this.transmission = transmission;
+        this.gear = gear;
+        this.engineCapacity = engineCapacity;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.mileage = mileage;
+        this.performance = performance;
+        this.vinNumber = vinNumber;
+        this.description = description;
+    }
 }

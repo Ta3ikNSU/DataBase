@@ -24,4 +24,9 @@ public class Review {
     @ManyToOne
     private Car car;
 
+    public Review(Long authorId, Integer grade, Car car) {
+        this.authorId = authorId;
+        this.grade = grade;
+        this.car = car;
+    }
 }
