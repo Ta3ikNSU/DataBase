@@ -20,18 +20,14 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping
-    public AuthResponseDTO auth(HttpServletResponse response,
-                                @RequestBody AuthRequestDTO authRequestDTO
-    ) {
+    public AuthResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO ) {
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
         return new AuthResponseDTO(authService.auth(mail, password));
     }
 
     @PostMapping("/register")
-    public RegisterResponseDTO register(HttpServletResponse response,
-                                @RequestBody AuthRequestDTO authRequestDTO
-    ) {
+    public RegisterResponseDTO register( @RequestBody AuthRequestDTO authRequestDTO) {
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
 

@@ -1,6 +1,7 @@
 package ta3ikdb.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ta3ikdb.entitys.Car;
 
@@ -14,4 +15,7 @@ public interface CarRepository extends JpaRepository <Car, Long> {
     List<Car> findCarsByEnginePowerBetween(Integer enginePower, Integer enginePower2);
     List<Car> findByColor(Integer color);
     List<Car> findByMileageBetween(String mileage, String mileage2);
+
+    @Query("select c from Car c where c.announcement.price > ?1 and c.announcement.price < ?2")
+    List<Car> findByCostBetween(Integer left, Integer right);
 }

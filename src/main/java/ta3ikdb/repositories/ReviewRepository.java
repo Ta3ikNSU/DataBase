@@ -10,5 +10,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Review findByAuthorId(Long authorId);
 
     @Query("select r from Review r where r.car.vinNumber = ?1")
-    Review findByCar(Integer vinNumber);
+    Review findByCarVinNumber(Integer vinNumber);
 }
