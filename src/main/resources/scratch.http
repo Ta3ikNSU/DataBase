@@ -1,0 +1,40 @@
+POST http://localhost:8080/authorize/register
+Content-Type: application/json
+
+{
+"mail" : "test1",
+"password": "1234"
+}
+
+###
+
+PUT http://localhost:8080/car/create
+Content-Type: application/json
+
+{
+  "mail" : "test1",
+  "brand" : "honda",
+  "model": "civic",
+  "transmission": 1,
+  "gear": 1,
+  "engineCapacity": 2,
+  "enginePower": 100,
+  "color": 124124,
+  "mileage": "mileage",
+  "vinNumber": 12345,
+  "description": "description",
+  "region": 123,
+  "price": 225000
+}
+
+###
+
+GET http://localhost:8080/car/announcements
+Content-Type: application/json
+
+{
+  "brand" : "honda",
+  "model": "civic"
+}
+
+###
