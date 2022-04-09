@@ -18,10 +18,10 @@ public class Car {
     @Column
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Announcement announcement;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @Column
     private List<Announcement> oldAnnouncement = new ArrayList<>();
 

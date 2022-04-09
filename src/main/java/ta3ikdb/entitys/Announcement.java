@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.Instant;
 
 @Entity
 @Getter
@@ -35,7 +34,7 @@ public class Announcement {
 
 
     public Announcement(Integer region, AnnouncementState status, Long price){
-        this.region =region;
+        this.region = region;
         this.status = status;
         this.price = price;
         this.start_date = new Timestamp(System.currentTimeMillis());

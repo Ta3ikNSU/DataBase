@@ -21,7 +21,7 @@ public class Review {
     @Column
     private Integer grade;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Car car;
 
     public Review(Long authorId, Integer grade, Car car) {

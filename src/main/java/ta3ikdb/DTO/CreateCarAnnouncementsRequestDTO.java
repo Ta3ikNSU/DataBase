@@ -14,11 +14,15 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public class CarAnnouncementsRequestDTO {
+public class CreateCarAnnouncementsRequestDTO {
+    @JsonProperty("mail")
+    @Getter
+    String mail;
+
     @JsonProperty("brand")
     @Getter
     String brand;
-    
+
     @JsonProperty("model")
     @Getter
     String model;
@@ -31,21 +35,13 @@ public class CarAnnouncementsRequestDTO {
     @Getter
     Integer gear;
 
-    @JsonProperty("minEngineCapacity")
+    @JsonProperty("engineCapacity")
     @Getter
-    Integer minEngineCapacity;
+    Integer engineCapacity;
 
-    @JsonProperty("maxEngineCapacity")
+    @JsonProperty("enginePower")
     @Getter
-    Integer maxEngineCapacity;
-
-    @JsonProperty("minEnginePower")
-    @Getter
-    Integer minEnginePower;
-
-    @JsonProperty("maxEnginePower")
-    @Getter
-    Integer maxEnginePower;
+    Integer enginePower;
 
     @JsonProperty("color")
     @Getter
@@ -59,4 +55,19 @@ public class CarAnnouncementsRequestDTO {
     @Getter
     Integer performance;
 
+    @JsonProperty("vinNumber")
+    @Getter
+    Long vinNumber;
+
+    @JsonProperty("description")
+    @Getter
+    String description;
+
+    @JsonProperty("region")
+    @Getter
+    Integer region;
+
+    @JsonProperty("price")
+    @Getter
+    Long price;
 }

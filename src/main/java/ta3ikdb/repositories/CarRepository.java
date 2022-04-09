@@ -1,21 +1,22 @@
 package ta3ikdb.repositories;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import ta3ikdb.entitys.AnnouncementState;
 import ta3ikdb.entitys.Car;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface CarRepository extends JpaRepository <Car, Long> {
-    List<Car> findCarsByBrand(String brand);
-    List<Car> findCarsByBrandAndModel(String brand, String model);
-    List<Car> findCarsByEngineCapacityBetween(Integer engineCapacity, Integer engineCapacity2);
-    List<Car> findCarsByEnginePowerBetween(Integer enginePower, Integer enginePower2);
-    List<Car> findByColor(Integer color);
-    List<Car> findByMileageBetween(String mileage, String mileage2);
-
-    @Query("select c from Car c where c.announcement.price > ?1 and c.announcement.price < ?2")
-    List<Car> findByCostBetween(Integer left, Integer right);
+public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor  {
+    Optional<Car> findByVinNumberAndAnnouncementStatus(Long vinNumber, AnnouncementState state);
 }
