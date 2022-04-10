@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @AllArgsConstructor(onConstructor = @__(@JsonCreator))
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,46 +19,46 @@ import lombok.experimental.FieldDefaults;
 public class CarAnnouncementsRequestDTO {
     @JsonProperty("brand")
     @Getter
-    String brand;
+    List<String> brand;
     
     @JsonProperty("model")
     @Getter
-    String model;
+    List<String> model;
 
     @JsonProperty("transmission")
     @Getter
-    Integer transmission;
+    List<Integer> transmission;
 
     @JsonProperty("gear")
     @Getter
-    Integer gear;
+    List<Integer> gear;
 
     @JsonProperty("minEngineCapacity")
     @Getter
-    Integer minEngineCapacity;
+    List<Integer> minEngineCapacity;
 
     @JsonProperty("maxEngineCapacity")
     @Getter
-    Integer maxEngineCapacity;
+    List<Integer> maxEngineCapacity;
 
     @JsonProperty("minEnginePower")
     @Getter
-    Integer minEnginePower;
+    List<Integer> minEnginePower;
 
     @JsonProperty("maxEnginePower")
     @Getter
-    Integer maxEnginePower;
+    List<Integer> maxEnginePower;
 
     @JsonProperty("color")
     @Getter
-    Integer color;
+    List<Integer> color;
 
     @JsonProperty("mileage")
     @Getter
-    String mileage;
+    List<String> mileage;
 
     @JsonProperty("performance")
     @Getter
-    Integer performance;
+    List<Integer> performance;
 
 }
