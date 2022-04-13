@@ -35,19 +35,19 @@ public class CarAnnouncementsRequestDTO {
 
     @JsonProperty("minEngineCapacity")
     @Getter
-    List<Integer> minEngineCapacity;
+    Integer minEngineCapacity;
 
     @JsonProperty("maxEngineCapacity")
     @Getter
-    List<Integer> maxEngineCapacity;
+    Integer maxEngineCapacity;
 
     @JsonProperty("minEnginePower")
     @Getter
-    List<Integer> minEnginePower;
+    Integer minEnginePower;
 
     @JsonProperty("maxEnginePower")
     @Getter
-    List<Integer> maxEnginePower;
+    Integer maxEnginePower;
 
     @JsonProperty("color")
     @Getter
