@@ -33,8 +33,14 @@ GET http://localhost:8080/car/announcements
 Content-Type: application/json
 
 {
-  "brand" : "honda",
-  "model": "civic"
+  "brand" : ["honda", "lada"],
+  "model": ["civic"],
+  "transmission" : [],
+  "gear" : [],
+  "mileage" : [],
+  "color" : [],
+  "performance" : []
+
 }
 
 ###

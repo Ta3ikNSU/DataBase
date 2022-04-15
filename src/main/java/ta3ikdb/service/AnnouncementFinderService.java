@@ -30,20 +30,20 @@ public class AnnouncementFinderService {
         List<Predicate> predicates = new ArrayList<>();
         if (values != null && !values.isEmpty()) {
             predicates = values.stream()
-                    .map((value) -> criteriaBuilder.equal(root.get("name"), value))
+                    .map((value) -> criteriaBuilder.equal(root.get(name), value))
                     .collect(Collectors.toList());
         }
         return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
 
-    private Predicate createPredicateBetween(Integer left, String leftName, Integer right, String rightName,
+    private Predicate createPredicateBetween(Integer left, Integer right, String name,
                                              Root<Car> root, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
         if (left != null) {
-            predicates.add(criteriaBuilder.greaterThan(root.get(leftName), left));
+            predicates.add(criteriaBuilder.greaterThan(root.get(name), left));
         }
         if (right != null) {
-            predicates.add(criteriaBuilder.lessThan(root.get(rightName), right));
+            predicates.add(criteriaBuilder.lessThan(root.get(name), right));
         }
         return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
@@ -61,19 +61,53 @@ public class AnnouncementFinderService {
             List<String> mileages,
             List<Integer> performances
     ) {
-        Specification<Car> querySpec = (root, query, criteriaBuilder) -> criteriaBuilder.and(
-                createPredicateByList(brands, "brand", root, criteriaBuilder),
-                createPredicateByList(models, "models", root, criteriaBuilder),
-                createPredicateByList(transmissions, "transmission", root, criteriaBuilder),
-                createPredicateByList(gears, "gear", root, criteriaBuilder),
-                createPredicateBetween(minEngineCapacity, "minEngineCapacity",
-                        maxEngineCapacity, "maxEngineCapacity", root, criteriaBuilder),
-                createPredicateBetween(minEnginePower, "minEnginePower",
-                        maxEnginePower, "maxEnginePower", root, criteriaBuilder),
-                createPredicateByList(colors, "color", root, criteriaBuilder),
-                createPredicateByList(mileages, "mileage", root, criteriaBuilder),
-                createPredicateByList(performances, "performance", root, criteriaBuilder)
-        );
+
+        Specification<Car> querySpec = new Specification<Car>() {
+            @Override
+            public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                if(brands!=null && !brands.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(brands, "brand", root, criteriaBuilder));
+                }
+
+                if(models!=null && !models.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(models, "model", root, criteriaBuilder));
+                }
+
+                if(transmissions!=null && !transmissions.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(transmissions, "transmission", root, criteriaBuilder));
+                }
+
+                if(gears!=null && !gears.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(gears, "gear", root, criteriaBuilder));
+                }
+
+
+                if(colors!=null && !colors.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(colors, "color", root, criteriaBuilder));
+                }
+
+
+                if(mileages!=null && !mileages.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(mileages, "mileage", root, criteriaBuilder));
+                }
+
+
+                if(performances!=null && !performances.isEmpty()){
+                    criteriaBuilder.and(createPredicateByList(performances, "performance", root, criteriaBuilder));
+                }
+
+                if(maxEngineCapacity!=null && minEngineCapacity != null){
+                    criteriaBuilder.and(createPredicateBetween(minEngineCapacity,
+                        maxEngineCapacity,"engineCapacity", root, criteriaBuilder));
+                }
+
+                if(maxEnginePower!=null && minEnginePower != null){
+                    criteriaBuilder.and(createPredicateBetween(minEnginePower,
+                            maxEnginePower,"enginePower", root, criteriaBuilder));
+                }
+                return criteriaBuilder.conjunction();
+            }
+        };
         return carRepository.findAll(querySpec);
     }
 

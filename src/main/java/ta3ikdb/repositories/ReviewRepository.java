@@ -11,7 +11,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("select r from Review r where r.car.vinNumber = ?1")
     Review findByCarVinNumber(Integer vinNumber);
-
-    @Query("select r from Review r where r.car.brand = ?1 and r.car.model = ?2")
-    Review findByCarModel(String brand, String model);
 }
