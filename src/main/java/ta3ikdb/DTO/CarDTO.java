@@ -2,7 +2,6 @@ package ta3ikdb.DTO;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +13,16 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public record RegisterResponseDTO(
-        @JsonProperty("success")
-        @Getter
-        Boolean success
-) {
+public class CarDTO {
+    String brand;
+    String model;
+    Integer transmission;
+    Integer gear;
+    Integer engineCapacity;
+    Integer enginePower;
+    Integer color;
+    String mileage;
+    Integer performance;
+    Long vinNumber;
+    String description;
 }

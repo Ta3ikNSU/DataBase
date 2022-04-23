@@ -3,6 +3,7 @@ package ta3ikdb.entitys;
 import lombok.*;
 
 import javax.persistence.*;
+
 @Entity
 @Getter
 @Setter
@@ -14,7 +15,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-
     @Column
     private Long authorId;
 

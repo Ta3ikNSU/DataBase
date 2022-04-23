@@ -9,15 +9,14 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@AllArgsConstructor(onConstructor = @__(@JsonCreator))
+@AllArgsConstructor(onConstructor_ = @JsonCreator)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public class AuthRequestDTO {
-    @JsonProperty("mail")
-    String mail;
-
-    @JsonProperty("password")
-    String password;
+public record AuthRequestDTO(
+        @JsonProperty("mail")
+        String mail,
+        @JsonProperty("password")String password
+) {
 }

@@ -14,10 +14,10 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public class RegisterRequestDTO {
-    @JsonProperty("mail")
-    String mail;
+public record RegisterRequestDTO(
+        @JsonProperty("mail")
+        String mail,
 
-    @JsonProperty("password")
-    String password;
+        @JsonProperty("password")
+        String password) {
 }

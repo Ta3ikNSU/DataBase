@@ -16,6 +16,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public class CarAnnouncementsResponseDTO {
-    List<Car> announcements;
+public record CarAnnouncementsResponseDTO(
+        List<Car> announcements
+) {
 }

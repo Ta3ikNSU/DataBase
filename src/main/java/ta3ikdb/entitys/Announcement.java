@@ -16,7 +16,6 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-
     @Column
     private Integer region;
 
@@ -33,7 +32,7 @@ public class Announcement {
     private Long price;
 
 
-    public Announcement(Integer region, AnnouncementState status, Long price){
+    public Announcement(Integer region, AnnouncementState status, Long price) {
         this.region = region;
         this.status = status;
         this.price = price;

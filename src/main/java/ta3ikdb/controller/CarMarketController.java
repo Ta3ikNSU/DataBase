@@ -1,11 +1,10 @@
 package ta3ikdb.controller;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ta3ikdb.DTO.CarAnnouncementsRequestDTO;
-import ta3ikdb.DTO.CarAnnouncementsResponseDTO;
-import ta3ikdb.DTO.CreateCarAnnouncementsRequestDTO;
-import ta3ikdb.DTO.CreateCarAnnouncementsResponseDTO;
+import ta3ikdb.mapper.CarMapper;
+import ta3ikdb.DTO.*;
 import ta3ikdb.entitys.Announcement;
 import ta3ikdb.entitys.AnnouncementState;
 import ta3ikdb.entitys.Car;
@@ -35,19 +34,32 @@ public class CarMarketController {
             @RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO
     ) {
         List<Car> cars = announcementFinderService.findCarsByParameters(
-                carAnnouncementsRequestDTO.getBrand(),
-                carAnnouncementsRequestDTO.getModel(),
-                carAnnouncementsRequestDTO.getTransmission(),
-                carAnnouncementsRequestDTO.getGear(),
-                carAnnouncementsRequestDTO.getMinEngineCapacity(),
-                carAnnouncementsRequestDTO.getMaxEngineCapacity(),
-                carAnnouncementsRequestDTO.getMinEnginePower(),
-                carAnnouncementsRequestDTO.getMaxEnginePower(),
-                carAnnouncementsRequestDTO.getColor(),
-                carAnnouncementsRequestDTO.getMileage(),
-                carAnnouncementsRequestDTO.getPerformance()
+                carAnnouncementsRequestDTO.brand(),
+                carAnnouncementsRequestDTO.model(),
+                carAnnouncementsRequestDTO.transmission(),
+                carAnnouncementsRequestDTO.gear(),
+                carAnnouncementsRequestDTO.minEngineCapacity(),
+                carAnnouncementsRequestDTO.maxEngineCapacity(),
+                carAnnouncementsRequestDTO.minEnginePower(),
+                carAnnouncementsRequestDTO.maxEnginePower(),
+                carAnnouncementsRequestDTO.color(),
+                carAnnouncementsRequestDTO.mileage(),
+                carAnnouncementsRequestDTO.performance()
         );
         return new CarAnnouncementsResponseDTO(cars);
+    }
+
+    @GetMapping("/announcements/{id}")
+    public CarDTO getCarAnnouncement(
+            @PathVariable String id
+    ) {
+        Optional<Car> carOptional = carRepository.getCarById(Long.valueOf(id));
+        if (carOptional.isPresent()) {
+            Car car = carOptional.get();
+            return Mappers.getMapper(CarMapper.class).carToCarDto(car);
+        } else {
+            return null;
+        }
     }
 
     @PutMapping("/create")

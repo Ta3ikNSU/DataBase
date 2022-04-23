@@ -58,19 +58,7 @@ public class Car {
     @Column
     private String description;
 
-    public Car(Announcement announcement,
-               String brand,
-               String model,
-               Integer transmission,
-               Integer gear,
-               Integer engineCapacity,
-               Integer enginePower,
-               Integer color,
-               String mileage,
-               Integer performance,
-               Long vinNumber,
-               String description
-    ) {
+    public Car(Announcement announcement, String brand, String model, Integer transmission, Integer gear, Integer engineCapacity, Integer enginePower, Integer color, String mileage, Integer performance, Long vinNumber, String description) {
         this.announcement = announcement;
         this.brand = brand;
         this.model = model;

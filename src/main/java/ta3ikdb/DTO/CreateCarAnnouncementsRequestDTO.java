@@ -14,60 +14,62 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public class CreateCarAnnouncementsRequestDTO {
-    @JsonProperty("mail")
-    @Getter
-    String mail;
+public record CreateCarAnnouncementsRequestDTO(
+        @JsonProperty("mail")
+        @Getter
+        String mail,
 
-    @JsonProperty("brand")
-    @Getter
-    String brand;
+        @JsonProperty("brand")
+        @Getter
+        String brand,
 
-    @JsonProperty("model")
-    @Getter
-    String model;
+        @JsonProperty("model")
+        @Getter
+        String model,
 
-    @JsonProperty("transmission")
-    @Getter
-    Integer transmission;
+        @JsonProperty("transmission")
+        @Getter
+        Integer transmission,
 
-    @JsonProperty("gear")
-    @Getter
-    Integer gear;
+        @JsonProperty("gear")
+        @Getter
+        Integer gear,
 
-    @JsonProperty("engineCapacity")
-    @Getter
-    Integer engineCapacity;
+        @JsonProperty("engineCapacity")
+        @Getter
+        Integer engineCapacity,
 
-    @JsonProperty("enginePower")
-    @Getter
-    Integer enginePower;
+        @JsonProperty("enginePower")
+        @Getter
+        Integer enginePower,
 
-    @JsonProperty("color")
-    @Getter
-    Integer color;
+        @JsonProperty("color")
+        @Getter
+        Integer color,
 
-    @JsonProperty("mileage")
-    @Getter
-    String mileage;
+        @JsonProperty("mileage")
+        @Getter
+        String mileage,
 
-    @JsonProperty("performance")
-    @Getter
-    Integer performance;
+        @JsonProperty("performance")
+        @Getter
+        Integer performance,
 
-    @JsonProperty("vinNumber")
-    @Getter
-    Long vinNumber;
+        @JsonProperty("vinNumber")
+        @Getter
+        Long vinNumber,
 
-    @JsonProperty("description")
-    @Getter
-    String description;
+        @JsonProperty("description")
+        @Getter
+        String description,
 
-    @JsonProperty("region")
-    @Getter
-    Integer region;
+        @JsonProperty("region")
+        @Getter
+        Integer region,
 
-    @JsonProperty("price")
-    @Getter
-    Long price;
+        @JsonProperty("price")
+        @Getter
+        Long price
+) {
+
 }

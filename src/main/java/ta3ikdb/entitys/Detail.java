@@ -12,12 +12,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Detail {
+public class Detail{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-
     @OneToOne(cascade = CascadeType.ALL)
     private Announcement announcement;
 

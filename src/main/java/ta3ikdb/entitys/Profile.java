@@ -16,8 +16,8 @@ import java.util.List;
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
-
     @Column(nullable = false)
     private Timestamp register_date;
 

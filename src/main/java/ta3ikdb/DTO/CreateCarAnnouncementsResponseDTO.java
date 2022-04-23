@@ -15,8 +15,9 @@ import ta3ikdb.entitys.Car;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public class CreateCarAnnouncementsResponseDTO {
-    @JsonProperty("Car")
-    @Getter
-    Car car;
+public record CreateCarAnnouncementsResponseDTO(
+        @JsonProperty("Car")
+        @Getter
+        Car car
+) {
 }
