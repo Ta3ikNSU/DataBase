@@ -14,62 +14,60 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public record CreateCarAnnouncementsRequestDTO(
+public class CreateCarAnnouncementsRequestDTO {
         @JsonProperty("mail")
         @Getter
-        String mail,
+        String mail;
 
         @JsonProperty("brand")
         @Getter
-        String brand,
+        String brand;
 
         @JsonProperty("model")
         @Getter
-        String model,
+        String model;
 
         @JsonProperty("transmission")
         @Getter
-        Integer transmission,
+        Integer transmission;
 
         @JsonProperty("gear")
         @Getter
-        Integer gear,
+        Integer gear;
 
         @JsonProperty("engineCapacity")
         @Getter
-        Integer engineCapacity,
+        Integer engineCapacity;
 
         @JsonProperty("enginePower")
         @Getter
-        Integer enginePower,
+        Integer enginePower;
 
         @JsonProperty("color")
         @Getter
-        Integer color,
+        Integer color;
 
         @JsonProperty("mileage")
         @Getter
-        String mileage,
+        String mileage;
 
         @JsonProperty("performance")
         @Getter
-        Integer performance,
+        Integer performance;
 
         @JsonProperty("vinNumber")
         @Getter
-        Long vinNumber,
+        Long vinNumber;
 
         @JsonProperty("description")
         @Getter
-        String description,
+        String description;
 
         @JsonProperty("region")
         @Getter
-        Integer region,
+        Integer region;
 
         @JsonProperty("price")
         @Getter
-        Long price
-) {
-
+        Long price;
 }

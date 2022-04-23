@@ -1,4 +1,4 @@
-package ta3ikdb.entitys;
+package ta3ikdb.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

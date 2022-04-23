@@ -14,9 +14,8 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public record RegisterResponseDTO(
+public class RegisterResponseDTO {
         @JsonProperty("success")
         @Getter
-        Boolean success
-) {
+        private Boolean success;
 }

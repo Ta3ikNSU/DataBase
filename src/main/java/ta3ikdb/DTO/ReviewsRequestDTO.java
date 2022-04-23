@@ -1,5 +1,5 @@
 package ta3ikdb.DTO;
 
-public record ReviewsRequestDTO() {
+public class ReviewsRequestDTO {
 
 }

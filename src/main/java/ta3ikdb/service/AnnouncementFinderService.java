@@ -3,13 +3,12 @@ package ta3ikdb.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ta3ikdb.entitys.Car;
-import ta3ikdb.entitys.Detail;
+import ta3ikdb.entities.Car;
+import ta3ikdb.entities.Detail;
 import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.DetailRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@AllArgsConstructor(onConstructor_ = @JsonCreator)
+@AllArgsConstructor(onConstructor = @__(@JsonCreator))
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter

@@ -23,15 +23,15 @@ public class AuthController {
 
     @PostMapping("/auth")
     public AuthResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO) {
-        String mail = authRequestDTO.mail();
-        String password = authRequestDTO.password();
+        String mail = authRequestDTO.getMail();
+        String password = authRequestDTO.getPassword();
         return new AuthResponseDTO(authService.auth(mail, password));
     }
 
     @PostMapping("/register")
     public RegisterResponseDTO register(@RequestBody AuthRequestDTO authRequestDTO) {
-        String mail = authRequestDTO.mail();
-        String password = authRequestDTO.password();
+        String mail = authRequestDTO.getMail();
+        String password = authRequestDTO.getPassword();
         if (!validationService.validateRegister(mail)) {
             return new RegisterResponseDTO(false);
         }

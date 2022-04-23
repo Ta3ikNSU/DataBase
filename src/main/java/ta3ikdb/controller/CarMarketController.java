@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ta3ikdb.mapper.CarMapper;
 import ta3ikdb.DTO.*;
-import ta3ikdb.entitys.Announcement;
-import ta3ikdb.entitys.AnnouncementState;
-import ta3ikdb.entitys.Car;
-import ta3ikdb.entitys.Profile;
+import ta3ikdb.entities.Announcement;
+import ta3ikdb.entities.AnnouncementState;
+import ta3ikdb.entities.Car;
+import ta3ikdb.entities.Profile;
 import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.ProfileRepository;
 import ta3ikdb.service.AnnouncementFinderService;
@@ -34,17 +34,17 @@ public class CarMarketController {
             @RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO
     ) {
         List<Car> cars = announcementFinderService.findCarsByParameters(
-                carAnnouncementsRequestDTO.brand(),
-                carAnnouncementsRequestDTO.model(),
-                carAnnouncementsRequestDTO.transmission(),
-                carAnnouncementsRequestDTO.gear(),
-                carAnnouncementsRequestDTO.minEngineCapacity(),
-                carAnnouncementsRequestDTO.maxEngineCapacity(),
-                carAnnouncementsRequestDTO.minEnginePower(),
-                carAnnouncementsRequestDTO.maxEnginePower(),
-                carAnnouncementsRequestDTO.color(),
-                carAnnouncementsRequestDTO.mileage(),
-                carAnnouncementsRequestDTO.performance()
+                carAnnouncementsRequestDTO.getBrand(),
+                carAnnouncementsRequestDTO.getModel(),
+                carAnnouncementsRequestDTO.getTransmission(),
+                carAnnouncementsRequestDTO.getGear(),
+                carAnnouncementsRequestDTO.getMinEngineCapacity(),
+                carAnnouncementsRequestDTO.getMaxEngineCapacity(),
+                carAnnouncementsRequestDTO.getMinEnginePower(),
+                carAnnouncementsRequestDTO.getMaxEnginePower(),
+                carAnnouncementsRequestDTO.getColor(),
+                carAnnouncementsRequestDTO.getMileage(),
+                carAnnouncementsRequestDTO.getPerformance()
         );
         return new CarAnnouncementsResponseDTO(cars);
     }

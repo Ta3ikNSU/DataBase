@@ -1,4 +1,4 @@
-package ta3ikdb.entitys;
+package ta3ikdb.entities;
 
 public enum AnnouncementState {
     OPEN,

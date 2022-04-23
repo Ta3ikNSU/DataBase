@@ -8,16 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import ta3ikdb.entitys.Car;
+import ta3ikdb.entities.Car;
 
 @AllArgsConstructor(onConstructor = @__(@JsonCreator))
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
-public record CreateCarAnnouncementsResponseDTO(
+public class CreateCarAnnouncementsResponseDTO {
         @JsonProperty("Car")
         @Getter
-        Car car
-) {
+        Car car;
 }

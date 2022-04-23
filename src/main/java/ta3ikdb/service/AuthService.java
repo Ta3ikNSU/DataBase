@@ -2,8 +2,8 @@ package ta3ikdb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ta3ikdb.entitys.Profile;
-import ta3ikdb.entitys.User;
+import ta3ikdb.entities.Profile;
+import ta3ikdb.entities.User;
 import ta3ikdb.repositories.ProfileRepository;
 import ta3ikdb.repositories.UserRepository;
 

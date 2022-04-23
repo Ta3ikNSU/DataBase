@@ -1,7 +1,7 @@
 package ta3ikdb.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ta3ikdb.entitys.Announcement;
+import ta3ikdb.entities.Announcement;
 
 import java.util.List;
 
