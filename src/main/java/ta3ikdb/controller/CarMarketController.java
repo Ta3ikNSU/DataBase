@@ -15,6 +15,7 @@ import ta3ikdb.service.AnnouncementFinderService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/car")
@@ -46,7 +47,8 @@ public class CarMarketController {
                 carAnnouncementsRequestDTO.getMileage(),
                 carAnnouncementsRequestDTO.getPerformance()
         );
-        return new CarAnnouncementsResponseDTO(cars);
+        List<CarDTO> carsDTO = cars.stream().map(car -> Mappers.getMapper(CarMapper.class).carToCarDto(car)).toList();
+        return new CarAnnouncementsResponseDTO(carsDTO);
     }
 
     @GetMapping("/announcements/{id}")

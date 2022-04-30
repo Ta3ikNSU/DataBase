@@ -17,5 +17,5 @@ import java.util.List;
 @Getter
 @ToString
 public class CarAnnouncementsResponseDTO {
-    List<Car> announcements;
+    List<CarDTO> announcements;
 }
