@@ -25,4 +25,5 @@ public class CarDTO {
     Integer performance;
     Long vinNumber;
     String description;
+    Long price;
 }

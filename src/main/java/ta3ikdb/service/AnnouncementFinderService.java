@@ -9,10 +9,12 @@ import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.DetailRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnnouncementFinderService {
@@ -23,57 +25,66 @@ public class AnnouncementFinderService {
     @Autowired
     DetailRepository detailRepository;
 
-    private <T> void addAndPredicateByList(List<T> values, String name,
-                                           Root<Car> root, CriteriaBuilder criteriaBuilder) {
+    private <T> Predicate createPredicateByList(List<T> values, String name, Root<Car> root, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
         if (values != null && !values.isEmpty()) {
-            List<Predicate> predicates = values.stream()
-                    .map(value -> criteriaBuilder.equal(root.get(name), value))
-                    .toList();
-            criteriaBuilder.and(criteriaBuilder.or(predicates.toArray(Predicate[]::new)));
+            predicates = values.stream().map((value) -> criteriaBuilder.equal(root.get(name), value)).collect(Collectors.toList());
         }
+        return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
 
-    private void addPredicateBetween(Integer left, Integer right, String name,
-                                     Root<Car> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate createPredicateBetween(Integer left, Integer right, String name, Root<Car> root, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
-        if (left == null) {
-            predicates.add(criteriaBuilder.greaterThan(root.get(name), Integer.MIN_VALUE));
-        } else {
+        if (left != null) {
             predicates.add(criteriaBuilder.greaterThan(root.get(name), left));
         }
-        if (right == null) {
-            predicates.add(criteriaBuilder.lessThan(root.get(name), Integer.MAX_VALUE));
-        } else {
-            predicates.add(criteriaBuilder.greaterThan(root.get(name), right));
+        if (right != null) {
+            predicates.add(criteriaBuilder.lessThan(root.get(name), right));
         }
-        criteriaBuilder.and(criteriaBuilder.or(predicates.toArray(Predicate[]::new)));
+        return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
 
-    public List<Car> findCarsByParameters(
-            List<String> brands,
-            List<String> models,
-            List<Integer> transmissions,
-            List<Integer> gears,
-            Integer minEngineCapacity,
-            Integer maxEngineCapacity,
-            Integer minEnginePower,
-            Integer maxEnginePower,
-            List<Integer> colors,
-            List<String> mileages,
-            List<Integer> performances
-    ) {
+    public List<Car> findCarsByParameters(List<String> brands, List<String> models, List<Integer> transmissions, List<Integer> gears, Integer minEngineCapacity, Integer maxEngineCapacity, Integer minEnginePower, Integer maxEnginePower, List<Integer> colors, List<String> mileages, List<Integer> performances) {
 
         Specification<Car> querySpec = (root, query, criteriaBuilder) -> {
-            addAndPredicateByList(brands, "brand", root, criteriaBuilder);
-            addAndPredicateByList(models, "model", root, criteriaBuilder);
-            addAndPredicateByList(transmissions, "transmission", root, criteriaBuilder);
-            addAndPredicateByList(gears, "gear", root, criteriaBuilder);
-            addAndPredicateByList(colors, "color", root, criteriaBuilder);
-            addAndPredicateByList(mileages, "mileage", root, criteriaBuilder);
-            addAndPredicateByList(performances, "performance", root, criteriaBuilder);
-            addPredicateBetween(minEngineCapacity, maxEngineCapacity, "engineCapacity", root, criteriaBuilder);
-            addPredicateBetween(minEnginePower, maxEnginePower, "enginePower", root, criteriaBuilder);
+            if (brands != null && !brands.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(brands, "brand", root, criteriaBuilder));
+            }
 
+            if (models != null && !models.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(models, "model", root, criteriaBuilder));
+            }
+
+            if (transmissions != null && !transmissions.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(transmissions, "transmission", root, criteriaBuilder));
+            }
+
+            if (gears != null && !gears.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(gears, "gear", root, criteriaBuilder));
+            }
+
+
+            if (colors != null && !colors.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(colors, "color", root, criteriaBuilder));
+            }
+
+
+            if (mileages != null && !mileages.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(mileages, "mileage", root, criteriaBuilder));
+            }
+
+
+            if (performances != null && !performances.isEmpty()) {
+                criteriaBuilder.and(createPredicateByList(performances, "performance", root, criteriaBuilder));
+            }
+
+            if (maxEngineCapacity != null && minEngineCapacity != null) {
+                criteriaBuilder.and(createPredicateBetween(minEngineCapacity, maxEngineCapacity, "engineCapacity", root, criteriaBuilder));
+            }
+
+            if (maxEnginePower != null && minEnginePower != null) {
+                criteriaBuilder.and(createPredicateBetween(minEnginePower, maxEnginePower, "enginePower", root, criteriaBuilder));
+            }
             return criteriaBuilder.conjunction();
         };
         return carRepository.findAll(querySpec);
@@ -82,10 +93,15 @@ public class AnnouncementFinderService {
     List<Car> findDetailsByParameters(
 
     ) {
-        Specification<Detail> querySpec = (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        Specification<Detail> querySpec = new Specification<Detail>() {
+            @Override
+            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+//                if (!brand.isEmpty()) {
+//                    predicates.add(criteriaBuilder.equal(root.get("brand"), brand));
+//                }
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
         };
         return detailRepository.findAll(querySpec);
     }
