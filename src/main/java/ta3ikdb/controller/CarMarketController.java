@@ -29,7 +29,7 @@ public class CarMarketController {
     @Autowired
     ProfileRepository profileRepository;
 
-    @GetMapping("/announcements")
+    @PostMapping ("/announcements")
     public CarAnnouncementsResponseDTO getCarAnnouncements(
             @RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO
     ) {
@@ -56,7 +56,7 @@ public class CarMarketController {
         return new CarAnnouncementsResponseDTO(carsDTO);
     }
 
-    @GetMapping("/announcements/{id}")
+    @PostMapping("/announcements/{id}")
     public CarDTO getCarAnnouncement(
             @PathVariable String id
     ) {

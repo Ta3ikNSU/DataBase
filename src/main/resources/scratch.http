@@ -1,4 +1,5 @@
-POST http://localhost:8081/authorize/register
+#POST http://localhost:8081/authorize/register
+POST http://192.168.56.1:8081/authorize/register
 Content-Type: application/json
 
 {
@@ -8,7 +9,8 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8081/car/create
+#PUT http://localhost:8081/car/create
+PUT http://192.168.56.1:8081/car/create
 Content-Type: application/json
 
 {
@@ -28,8 +30,8 @@ Content-Type: application/json
 }
 
 ###
-
-GET http://localhost:8081/car/announcements
+#POST http://localhost:8081/car/announcements
+POST http://192.168.56.1:8081/car/announcements
 Content-Type: application/json
 
 {
