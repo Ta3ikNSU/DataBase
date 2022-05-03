@@ -9,12 +9,10 @@ import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.DetailRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AnnouncementFinderService {
@@ -28,7 +26,7 @@ public class AnnouncementFinderService {
     private <T> Predicate createPredicateByList(List<T> values, String name, Root<Car> root, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
         if (values != null && !values.isEmpty()) {
-            predicates = values.stream().map((value) -> criteriaBuilder.equal(root.get(name), value)).collect(Collectors.toList());
+            predicates = values.stream().map((value) -> criteriaBuilder.equal(root.get(name), value)).toList();
         }
         return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
@@ -93,15 +91,12 @@ public class AnnouncementFinderService {
     List<Car> findDetailsByParameters(
 
     ) {
-        Specification<Detail> querySpec = new Specification<Detail>() {
-            @Override
-            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
+        Specification<Detail> querySpec = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
 //                if (!brand.isEmpty()) {
 //                    predicates.add(criteriaBuilder.equal(root.get("brand"), brand));
 //                }
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return detailRepository.findAll(querySpec);
     }

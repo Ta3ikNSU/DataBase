@@ -16,7 +16,7 @@ import ta3ikdb.entities.Car;
 @Getter
 @ToString
 public class CreateCarAnnouncementsResponseDTO {
-        @JsonProperty("Car")
+        @JsonProperty("carDTO")
         @Getter
-        Car car;
+        CarDTO carDTO;
 }

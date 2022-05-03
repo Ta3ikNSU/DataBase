@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ta3ikdb.DTO.AuthRequestDTO;
-import ta3ikdb.DTO.AuthResponseDTO;
-import ta3ikdb.DTO.RegisterResponseDTO;
+import ta3ikdb.DTO.OkResponseDTO;
 import ta3ikdb.service.AuthService;
 import ta3ikdb.service.ValidationService;
 
@@ -22,19 +21,19 @@ public class AuthController {
     ValidationService validationService;
 
     @PostMapping("/auth")
-    public AuthResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO) {
+    public OkResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO) {
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
-        return new AuthResponseDTO(authService.auth(mail, password));
+        return new OkResponseDTO(authService.auth(mail, password));
     }
 
     @PostMapping("/register")
-    public RegisterResponseDTO register(@RequestBody AuthRequestDTO authRequestDTO) {
+    public OkResponseDTO register(@RequestBody AuthRequestDTO authRequestDTO) {
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
         if (!validationService.validateRegister(mail)) {
-            return new RegisterResponseDTO(false);
+            return new OkResponseDTO(false);
         }
-        return new RegisterResponseDTO(authService.register(mail, password));
+        return new OkResponseDTO(authService.register(mail, password));
     }
 }
