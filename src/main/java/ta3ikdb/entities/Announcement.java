@@ -31,6 +31,9 @@ public class Announcement {
     @Column
     private Long price;
 
+    // json field for photos
+    @Column
+    private Links photosList;
 
     public Announcement(Integer region, AnnouncementState status, Long price) {
         this.region = region;

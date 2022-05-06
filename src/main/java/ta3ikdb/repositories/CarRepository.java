@@ -15,6 +15,18 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
     Optional<Car> findByVinNumberAndAnnouncementStatus(Long vinNumber, AnnouncementState state);
 
     Optional<Car> getCarById(Long id);
-    List<Car> findByIdInAndAnnouncement_PriceBetween(Collection<Long> ids, Long priceStart, Long priceEnd);
+
+    @Query("select c from Car c where c.id in :ids and c.announcement.price between :left and :right and c.announcement.status = :state")
+    List<Car> findByIdInAndAnnouncement_PriceBetweenAndState(@Param("ids") Collection<Long> ids,
+                                                     @Param("left") Long priceStart,
+                                                     @Param("right") Long priceEnd,
+                                                     @Param("state") AnnouncementState state);
+
+    @Query("select c from Car c where c.id in :ids and c.announcement.price between :left and :right")
+    List<Car> findByIdInAndAnnouncement_PriceBetween(@Param("ids") Collection<Long> ids,
+                                                             @Param("left") Long priceStart,
+                                                             @Param("right") Long priceEnd);
+
+
 
 }

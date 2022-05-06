@@ -7,6 +7,5 @@ import ta3ikdb.entities.Car;
 
 @Mapper
 public interface CarMapper {
-    @Mapping(target = "price", source = "announcement.price")
     CarDTO carToCarDto(Car car);
 }

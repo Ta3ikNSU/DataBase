@@ -3,6 +3,7 @@ package ta3ikdb.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ta3ikdb.entities.AnnouncementState;
 import ta3ikdb.entities.Car;
 import ta3ikdb.entities.Detail;
 import ta3ikdb.repositories.CarRepository;
@@ -42,7 +43,17 @@ public class AnnouncementFinderService {
         return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
 
-    public List<Car> findCarsByParameters(List<String> brands, List<String> models, List<Integer> transmissions, List<Integer> gears, Integer minEngineCapacity, Integer maxEngineCapacity, Integer minEnginePower, Integer maxEnginePower, List<Integer> colors, List<String> mileages, List<Integer> performances) {
+    public List<Car> findCarsByParameters(List<String> brands,
+                                          List<String> models,
+                                          List<Integer> transmissions,
+                                          List<Integer> gears,
+                                          Integer minEngineCapacity,
+                                          Integer maxEngineCapacity,
+                                          Integer minEnginePower,
+                                          Integer maxEnginePower,
+                                          List<Integer> colors,
+                                          List<String> mileages,
+                                          List<Integer> performances) {
 
         Specification<Car> querySpec = (root, query, criteriaBuilder) -> {
             if (brands != null && !brands.isEmpty()) {
@@ -83,6 +94,7 @@ public class AnnouncementFinderService {
             if (maxEnginePower != null && minEnginePower != null) {
                 criteriaBuilder.and(createPredicateBetween(minEnginePower, maxEnginePower, "enginePower", root, criteriaBuilder));
             }
+
             return criteriaBuilder.conjunction();
         };
         return carRepository.findAll(querySpec);

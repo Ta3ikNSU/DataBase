@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import ta3ikdb.entities.AnnouncementState;
 
 import java.util.List;
 
@@ -69,5 +70,8 @@ public class CarAnnouncementsRequestDTO {
     @Getter
     Long maxPrice;
 
+    @JsonProperty("maxPrice")
+    @Getter
+    AnnouncementState state;
 
 }
