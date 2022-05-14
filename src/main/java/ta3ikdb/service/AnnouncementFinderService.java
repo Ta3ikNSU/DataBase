@@ -1,11 +1,18 @@
 package ta3ikdb.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import ta3ikdb.DTO.CarAnnouncementsRequestDTO;
+import ta3ikdb.DTO.CarDTO;
 import ta3ikdb.entities.AnnouncementState;
 import ta3ikdb.entities.Car;
 import ta3ikdb.entities.Detail;
+import ta3ikdb.mapper.DTOMapper;
 import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.DetailRepository;
 
@@ -18,6 +25,7 @@ import java.util.List;
 @Service
 public class AnnouncementFinderService {
 
+    private final Logger log = LogManager.getLogger();
     @Autowired
     CarRepository carRepository;
 
@@ -53,7 +61,10 @@ public class AnnouncementFinderService {
                                           Integer maxEnginePower,
                                           List<Integer> colors,
                                           List<String> mileages,
-                                          List<Integer> performances) {
+                                          List<Integer> performances,
+                                          Long minPrice,
+                                          Long maxPrice,
+                                          AnnouncementState state) {
 
         Specification<Car> querySpec = (root, query, criteriaBuilder) -> {
             if (brands != null && !brands.isEmpty()) {
@@ -97,7 +108,21 @@ public class AnnouncementFinderService {
 
             return criteriaBuilder.conjunction();
         };
-        return carRepository.findAll(querySpec);
+        List<Car> carsNoPrice = carRepository.findAll(querySpec);
+        List<Long> ids = carsNoPrice.stream().map(Car::getId).toList();
+        List<Car> cars;
+        Long left = minPrice == null ? 0 : minPrice;
+        Long right = maxPrice == null ? Long.MAX_VALUE : maxPrice;
+        if (state == null) {
+            cars = carRepository.findByIdInAndAnnouncement_PriceBetween(
+                    ids, left, right
+            );
+        } else {
+            cars = carRepository.findByIdInAndAnnouncement_PriceBetweenAndState(
+                    ids, left, right, state
+            );
+        }
+        return cars;
     }
 
     List<Car> findDetailsByParameters(
@@ -111,5 +136,55 @@ public class AnnouncementFinderService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return detailRepository.findAll(querySpec);
+    }
+
+    public List<CarDTO> getCarsAnnouncementsDTOByCarAnnouncementsRequestDTO(
+            @RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO
+    ){
+        log.info("request = {}", carAnnouncementsRequestDTO);
+        List<Car> cars = this.findCarsByParameters(
+                carAnnouncementsRequestDTO.getBrand(),
+                carAnnouncementsRequestDTO.getModel(),
+                carAnnouncementsRequestDTO.getTransmission(),
+                carAnnouncementsRequestDTO.getGear(),
+                carAnnouncementsRequestDTO.getMinEngineCapacity(),
+                carAnnouncementsRequestDTO.getMaxEngineCapacity(),
+                carAnnouncementsRequestDTO.getMinEnginePower(),
+                carAnnouncementsRequestDTO.getMaxEnginePower(),
+                carAnnouncementsRequestDTO.getColor(),
+                carAnnouncementsRequestDTO.getMileage(),
+                carAnnouncementsRequestDTO.getPerformance(),
+                carAnnouncementsRequestDTO.getMinPrice(),
+                carAnnouncementsRequestDTO.getMaxPrice(),
+                carAnnouncementsRequestDTO.getState()
+        );
+
+        log.info("get cars = {}", cars);
+        return cars.stream().map(car -> Mappers.getMapper(DTOMapper.class).carToCarDto(car)).toList();
+    }
+
+    public List<Car> getCarsAnnouncementsByCarAnnouncementsRequestDTO(
+            @RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO
+    ){
+        log.info("request = {}", carAnnouncementsRequestDTO);
+        List<Car> cars = this.findCarsByParameters(
+                carAnnouncementsRequestDTO.getBrand(),
+                carAnnouncementsRequestDTO.getModel(),
+                carAnnouncementsRequestDTO.getTransmission(),
+                carAnnouncementsRequestDTO.getGear(),
+                carAnnouncementsRequestDTO.getMinEngineCapacity(),
+                carAnnouncementsRequestDTO.getMaxEngineCapacity(),
+                carAnnouncementsRequestDTO.getMinEnginePower(),
+                carAnnouncementsRequestDTO.getMaxEnginePower(),
+                carAnnouncementsRequestDTO.getColor(),
+                carAnnouncementsRequestDTO.getMileage(),
+                carAnnouncementsRequestDTO.getPerformance(),
+                carAnnouncementsRequestDTO.getMinPrice(),
+                carAnnouncementsRequestDTO.getMaxPrice(),
+                carAnnouncementsRequestDTO.getState()
+        );
+
+        log.info("get cars = {}", cars);
+        return cars;
     }
 }

@@ -24,6 +24,8 @@ public class AuthController {
     @Autowired
     ValidationService validationService;
 
+
+    // авторизация
     @PostMapping("/auth")
     public OkResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO) {
         log.info("auth request = {}", authRequestDTO);
@@ -33,6 +35,7 @@ public class AuthController {
         return new OkResponseDTO(isSuccess);
     }
 
+    // регистрация
     @PostMapping("/register")
     public OkResponseDTO register(@RequestBody AuthRequestDTO authRequestDTO) {
         String mail = authRequestDTO.getMail();
