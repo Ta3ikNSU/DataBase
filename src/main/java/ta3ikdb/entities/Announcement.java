@@ -11,10 +11,11 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Announcement {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Long id;
     @Column
     private Integer region;
@@ -33,7 +34,7 @@ public class Announcement {
 
     // json field for photos
     @Column
-    private Links photosList;
+    private String photosList;
 
     public Announcement(Integer region, AnnouncementState status, Long price) {
         this.region = region;

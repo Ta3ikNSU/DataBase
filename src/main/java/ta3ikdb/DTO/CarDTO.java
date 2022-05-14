@@ -13,13 +13,13 @@ import lombok.experimental.FieldDefaults;
 public class CarDTO {
     String brand;
     String model;
-    Integer transmission;
-    Integer gear;
+    String transmission;
+    String gear;
     Integer engineCapacity;
     Integer enginePower;
-    Integer color;
-    String mileage;
-    Integer performance;
+    String  color;
+    Integer mileage;
+    String performance;
     Long vinNumber;
     String description;
     AnnouncementDTO announcementDTO;

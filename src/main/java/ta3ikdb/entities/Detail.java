@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Detail{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +20,6 @@ public class Detail{
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)
     private Announcement announcement;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @Column
-    private List<Announcement> oldAnnouncement = new ArrayList<>();
 
     @Column
     private Integer type;
@@ -35,6 +32,8 @@ public class Detail{
 
     @Column
     private String status;
+
+
 
     public Detail(Announcement announcement, Integer type, String brand, String model, String status) {
         this.announcement = announcement;

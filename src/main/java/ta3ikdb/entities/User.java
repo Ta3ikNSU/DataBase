@@ -1,9 +1,6 @@
 package ta3ikdb.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,15 +9,15 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(nullable = false)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String mail;
-
-    @Column
+    @Column(nullable = false)
     private String password;
 
     public User(String mail, String password) {

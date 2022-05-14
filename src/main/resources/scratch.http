@@ -15,8 +15,8 @@ Content-Type: application/json
 
 {
   "mail" : "test1",
-  "brand" : "honda",
-  "model": "civic",
+  "brand" : "Honda",
+  "model": "Civic",
   "transmission": 1,
   "gear": 1,
   "engineCapacity": 2,
@@ -28,6 +28,36 @@ Content-Type: application/json
   "region": 123,
   "price": 225000
 }
+
+###
+
+PUT http://localhost:8081/car/create
+#PUT http://10.9.4.168:8081/car/create
+Content-Type: application/json
+
+{
+  "mail" : "test1",
+  "brand" : "Lada",
+  "model": "Largus",
+  "transmission": 1,
+  "gear": 1,
+  "engineCapacity": 2,
+  "enginePower": 100,
+  "color": 124124,
+  "mileage": "mileage",
+  "vinNumber": 12345,
+  "description": "description",
+  "region": 123,
+  "price": 225000
+}
+
+###
+
+POST http://localhost:8081/car/announcements
+#POST http://10.9.4.168:8081/car/announcements
+Content-Type: application/json
+
+{}
 
 ###
 POST http://localhost:8081/car/announcements
@@ -47,3 +77,5 @@ Content-Type: application/json
 }
 
 ###
+
+

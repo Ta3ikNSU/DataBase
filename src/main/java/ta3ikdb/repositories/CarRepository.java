@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor {
     Optional<Car> findByVinNumberAndAnnouncementStatus(Long vinNumber, AnnouncementState state);
 
-    Optional<Car> getCarById(Long id);
+    Optional<Car> getCarByVinNumber(Long vin);
 
     @Query("select c from Car c where c.id in :ids and c.announcement.price between :left and :right and c.announcement.status = :state")
     List<Car> findByIdInAndAnnouncement_PriceBetweenAndState(@Param("ids") Collection<Long> ids,

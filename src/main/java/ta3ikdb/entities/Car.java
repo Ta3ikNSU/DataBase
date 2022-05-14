@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +26,17 @@ public class Car {
     @Column
     private List<Announcement> oldAnnouncement = new ArrayList<>();
 
-    @Column
+    @Column(nullable = false)
     private String brand;
 
-    @Column
+    @Column(nullable = false)
     private String model;
 
     @Column
-    private Integer transmission;
+    private String transmission;
 
     @Column
-    private Integer gear;
+    private String gear;
 
     @Column
     private Integer engineCapacity;
@@ -44,21 +45,21 @@ public class Car {
     private Integer enginePower;
 
     @Column
-    private Integer color;
+    private String color;
 
     @Column
-    private String mileage;
+    private Integer mileage;
 
     @Column
-    private Integer performance;
+    private String performance;
 
-    @Column
+    @Column(nullable = false)
     private Long vinNumber;
 
     @Column
     private String description;
 
-    public Car(Announcement announcement, String brand, String model, Integer transmission, Integer gear, Integer engineCapacity, Integer enginePower, Integer color, String mileage, Integer performance, Long vinNumber, String description) {
+    public Car(Announcement announcement, String brand, String model, String transmission, String gear, Integer engineCapacity, Integer enginePower, String color, Integer mileage, String performance, Long vinNumber, String description) {
         this.announcement = announcement;
         this.brand = brand;
         this.model = model;

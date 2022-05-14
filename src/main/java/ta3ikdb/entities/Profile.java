@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,7 @@ public class Profile {
     @Column(nullable = false)
     private String mail;
 
-    @Column(nullable = false)
+    @Column
     private String nickname;
 
     @Column

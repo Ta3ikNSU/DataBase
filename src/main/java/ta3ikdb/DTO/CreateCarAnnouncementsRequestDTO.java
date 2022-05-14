@@ -29,11 +29,11 @@ public class CreateCarAnnouncementsRequestDTO {
 
         @JsonProperty("transmission")
         @Getter
-        Integer transmission;
+        String transmission;
 
         @JsonProperty("gear")
         @Getter
-        Integer gear;
+        String gear;
 
         @JsonProperty("engineCapacity")
         @Getter
@@ -45,15 +45,15 @@ public class CreateCarAnnouncementsRequestDTO {
 
         @JsonProperty("color")
         @Getter
-        Integer color;
+        String color;
 
         @JsonProperty("mileage")
         @Getter
-        String mileage;
+        Integer mileage;
 
         @JsonProperty("performance")
         @Getter
-        Integer performance;
+        String performance;
 
         @JsonProperty("vinNumber")
         @Getter

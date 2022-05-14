@@ -1,5 +1,7 @@
 package ta3ikdb.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,8 @@ import ta3ikdb.service.ValidationService;
 @RequestMapping(value = "/authorize")
 public class AuthController {
 
+    private final Logger log =  LogManager.getLogger();
+
     @Autowired
     AuthService authService;
 
@@ -22,9 +26,11 @@ public class AuthController {
 
     @PostMapping("/auth")
     public OkResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO) {
+        log.info("auth request = {}", authRequestDTO);
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
-        return new OkResponseDTO(authService.auth(mail, password));
+        boolean isSuccess = authService.auth(mail, password);
+        return new OkResponseDTO(isSuccess);
     }
 
     @PostMapping("/register")

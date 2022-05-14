@@ -70,8 +70,7 @@ public class CarAnnouncementsRequestDTO {
     @Getter
     Long maxPrice;
 
-    @JsonProperty("maxPrice")
+    @JsonProperty("state")
     @Getter
     AnnouncementState state;
-
 }
