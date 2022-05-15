@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Car {
+public class Car implements Comparable<Car> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -72,5 +72,10 @@ public class Car {
         this.performance = performance;
         this.vinNumber = vinNumber;
         this.description = description;
+    }
+
+    @Override
+    public int compareTo(Car other) {
+        return (int)(other.vinNumber - this.vinNumber);
     }
 }

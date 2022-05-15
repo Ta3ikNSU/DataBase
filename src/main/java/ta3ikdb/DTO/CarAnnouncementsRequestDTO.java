@@ -73,4 +73,8 @@ public class CarAnnouncementsRequestDTO {
     @JsonProperty("state")
     @Getter
     AnnouncementState state;
+
+    @JsonProperty("sort_name")
+    @Getter
+    String fieldSortName;
 }

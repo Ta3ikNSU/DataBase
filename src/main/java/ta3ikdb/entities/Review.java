@@ -3,7 +3,6 @@ package ta3ikdb.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -23,12 +22,12 @@ public class Review {
     @Column
     private Integer grade;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Car> cars;
+    @ManyToOne
+    private Car car;
 
-    public Review(Long authorId, Integer grade, List<Car> cars) {
+    public Review(Long authorId, Integer grade,Car car) {
         this.authorId = authorId;
         this.grade = grade;
-        this.cars.addAll(cars);
+        this.car = car;
     }
 }

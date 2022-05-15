@@ -16,7 +16,6 @@ import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.ProfileRepository;
 import ta3ikdb.service.AnnouncementFinderService;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -39,7 +38,7 @@ public class CarMarketController {
     // все объявления по фильтру
     @PostMapping("/announcements")
     public CarAnnouncementsResponseDTO getCarAnnouncements(@RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO) {
-        return new CarAnnouncementsResponseDTO(announcementFinderService.getCarsAnnouncementsDTOByCarAnnouncementsRequestDTO(carAnnouncementsRequestDTO));
+        return new CarAnnouncementsResponseDTO(announcementFinderService.getCarsAnnouncementsDTOByCarAnnouncementsRequestDTO(carAnnouncementsRequestDTO, 0));
     }
 
     // объявление по id
@@ -70,7 +69,6 @@ public class CarMarketController {
             car = optionalCar.get();
             Announcement old = car.getAnnouncement();
             old.setStatus(AnnouncementState.DELETE);
-            announcementRepository.save(old);
             car.setAnnouncement(announcement);
             car.setPerformance(createCarAnnouncementsRequestDTO.getPerformance());
             car.setColor(createCarAnnouncementsRequestDTO.getColor());
@@ -78,32 +76,26 @@ public class CarMarketController {
             car.setDescription(createCarAnnouncementsRequestDTO.getDescription());
             car.setGear(createCarAnnouncementsRequestDTO.getGear());
             car.setEnginePower(createCarAnnouncementsRequestDTO.getEnginePower());
-            carRepository.save(car);
         } else {
             car = new Car(announcement, createCarAnnouncementsRequestDTO.getBrand(), createCarAnnouncementsRequestDTO.getModel(), createCarAnnouncementsRequestDTO.getTransmission(), createCarAnnouncementsRequestDTO.getGear(), createCarAnnouncementsRequestDTO.getEngineCapacity(), createCarAnnouncementsRequestDTO.getEnginePower(), createCarAnnouncementsRequestDTO.getColor(), createCarAnnouncementsRequestDTO.getMileage(), createCarAnnouncementsRequestDTO.getPerformance(), createCarAnnouncementsRequestDTO.getVinNumber(), createCarAnnouncementsRequestDTO.getDescription());
+            carRepository.save(car);
         }
         announcementRepository.save(announcement);
         Profile profile = optionalProfile.get();
         profile.getFavoriteAnnouncementCar().add(car);
-        carRepository.save(car);
-        profileRepository.save(profile);
         return new CreateCarAnnouncementsResponseDTO(Mappers.getMapper(DTOMapper.class).carToCarDto(car));
     }
 
     // объявления на конкретной странице
     @PostMapping("/announcements/page/{pageNumber}")
     public CarAnnouncementsResponseDTO getCarAnnouncements(@RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO, @PathVariable Integer pageNumber) {
-        // TODO()
-
-        return null;
+        return new CarAnnouncementsResponseDTO(announcementFinderService.getCarsAnnouncementsDTOByCarAnnouncementsRequestDTO(carAnnouncementsRequestDTO, pageNumber));
     }
 
     // количество страниц
     @PostMapping("/announcements/pages")
     public Integer getPageCount(@RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO) {
-        // TODO()
-
-        return 1;
+        return announcementFinderService.getAnnouncementsPagesCount(carAnnouncementsRequestDTO);
     }
 
 

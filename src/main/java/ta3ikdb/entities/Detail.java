@@ -34,7 +34,6 @@ public class Detail{
     private String status;
 
 
-
     public Detail(Announcement announcement, Integer type, String brand, String model, String status) {
         this.announcement = announcement;
         this.type = type;

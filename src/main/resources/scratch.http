@@ -1,3 +1,5 @@
+#регистрация юзера
+
 POST http://localhost:8081/authorize/register
 #POST http://10.9.4.168:8081/authorize/register
 Content-Type: application/json
@@ -8,6 +10,7 @@ Content-Type: application/json
 }
 
 ###
+#Добавление объявления (id: 1)
 
 PUT http://localhost:8081/car/create
 #PUT http://10.9.4.168:8081/car/create
@@ -30,6 +33,7 @@ Content-Type: application/json
 }
 
 ###
+#Добавление объявления (id: 2)
 
 PUT http://localhost:8081/car/create
 #PUT http://10.9.4.168:8081/car/create
@@ -52,6 +56,7 @@ Content-Type: application/json
 }
 
 ###
+# запрос объявлений с пустыми фильтрами
 
 POST http://localhost:8081/car/announcements
 #POST http://10.9.4.168:8081/car/announcements
@@ -60,6 +65,8 @@ Content-Type: application/json
 {}
 
 ###
+# запрос объявлений с некоторыми фильтрами
+
 POST http://localhost:8081/car/announcements
 #POST http://10.9.4.168:8081/car/announcements
 Content-Type: application/json

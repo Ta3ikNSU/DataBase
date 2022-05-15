@@ -1,0 +1,21 @@
+package ta3ikdb.repositories;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import ta3ikdb.entities.Accident;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface AccidentRepository {
+
+    @Query("select a from Accident a where (select c from Car c where c.vinNumber = :vin) member a.cars")
+    Optional<Accident> countAccidentByVinNumber(@Param("vin") Long vin);
+
+    // список автомобилей по количеству дтп
+
+    @Query("select a. from Accident a")
+    List<Object[]> searchСarsWithMostAccidents();
+}
