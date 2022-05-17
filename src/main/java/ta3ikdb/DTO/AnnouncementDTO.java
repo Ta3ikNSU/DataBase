@@ -17,16 +17,22 @@ import java.sql.Timestamp;
 @Getter
 @ToString
 public class AnnouncementDTO {
+
     @JsonProperty("region")
     Integer region;
+
     @JsonProperty("startDate")
     Timestamp startDate;
+
     @JsonProperty("endDate")
     Timestamp endDate;
+
     @JsonProperty("state")
     AnnouncementState status;
+
     @JsonProperty("price")
     Long price;
+
     @JsonProperty("photosList")
     String photosList;
 }

@@ -52,15 +52,15 @@ public class CarAnnouncementsRequestDTO {
 
     @JsonProperty("color")
     @Getter
-    List<Integer> color;
+    List<String> color;
 
     @JsonProperty("mileage")
     @Getter
-    List<String> mileage;
+    List<Integer> mileage;
 
     @JsonProperty("performance")
     @Getter
-    List<Integer> performance;
+    List<String> performance;
 
     @JsonProperty("minPrice")
     @Getter

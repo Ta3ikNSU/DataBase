@@ -55,45 +55,29 @@ public class AnnouncementFinderService {
         return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
 
-    public List<Car> findCarsByParameters(List<String> brands,
-                                          List<String> models,
-                                          List<Integer> transmissions,
-                                          List<Integer> gears,
-                                          Integer minEngineCapacity,
-                                          Integer maxEngineCapacity,
-                                          Integer minEnginePower,
-                                          Integer maxEnginePower,
-                                          List<Integer> colors,
-                                          List<String> mileages,
-                                          List<Integer> performances,
-                                          Long minPrice,
-                                          Long maxPrice,
-                                          AnnouncementState state,
-                                          String fieldname,
-                                          Integer pageNumber) {
+    public List<Car> findCarsByParameters(List<String> brands, List<String> models, List<Integer> transmissions, List<Integer> gears, Integer minEngineCapacity, Integer maxEngineCapacity, Integer minEnginePower, Integer maxEnginePower, List<String> colors, List<Integer> mileages, List<String> performances, Long minPrice, Long maxPrice, AnnouncementState state, String fieldname, Integer pageNumber) {
 
-        Specification<Car> querySpec = createSpec(brands, models, transmissions, gears, minEngineCapacity, maxEngineCapacity, minEnginePower, maxEnginePower, colors, mileages, performances);
+        Long left = minPrice == null ? 0 : minPrice;
+        Long right = maxPrice == null ? Long.MAX_VALUE : maxPrice;
+        Specification<Car> querySpec = createSpec(brands, models, transmissions, gears, minEngineCapacity, maxEngineCapacity, minEnginePower, maxEnginePower, left, right, colors, mileages, performances);
         Pageable sortedAndPageCondition = PageRequest.of(pageNumber, 25, Sort.by(fieldname).descending());
         List<Car> carsNoPrice = carRepository.findAll(querySpec);
         List<Long> ids = carsNoPrice.stream().map(Car::getId).toList();
         Page<Car> cars;
-        Long left = minPrice == null ? 0 : minPrice;
-        Long right = maxPrice == null ? Long.MAX_VALUE : maxPrice;
         if (state == null) {
-            cars = carRepository.findByIdInAndAnnouncementPriceBetween(
-                    ids, left, right, sortedAndPageCondition
-            );
+            cars = carRepository.findByIdIn(ids, sortedAndPageCondition);
         } else {
-            cars = carRepository.findByIdInAndAnnouncementPriceBetweenAndState(
-                    ids, left, right, state, sortedAndPageCondition
-            );
+            cars = carRepository.findByIdInAndState(ids, state, sortedAndPageCondition);
         }
         return cars.stream().toList();
     }
 
     public  Integer getAnnouncementsPagesCount(CarAnnouncementsRequestDTO carAnnouncementsRequestDTO){
+
+        Long left = carAnnouncementsRequestDTO.getMinPrice() == null ? 0 : carAnnouncementsRequestDTO.getMinPrice();
+        Long right = carAnnouncementsRequestDTO.getMaxPrice() == null ? Long.MAX_VALUE : carAnnouncementsRequestDTO.getMaxPrice();
         Specification<Car> querySpec = createSpec(
-                        carAnnouncementsRequestDTO.getBrand(),
+                carAnnouncementsRequestDTO.getBrand(),
                 carAnnouncementsRequestDTO.getModel(),
                 carAnnouncementsRequestDTO.getTransmission(),
                 carAnnouncementsRequestDTO.getGear(),
@@ -101,6 +85,8 @@ public class AnnouncementFinderService {
                 carAnnouncementsRequestDTO.getMaxEngineCapacity(),
                 carAnnouncementsRequestDTO.getMinEnginePower(),
                 carAnnouncementsRequestDTO.getMaxEnginePower(),
+                left,
+                right,
                 carAnnouncementsRequestDTO.getColor(),
                 carAnnouncementsRequestDTO.getMileage(),
                 carAnnouncementsRequestDTO.getPerformance()
@@ -108,30 +94,14 @@ public class AnnouncementFinderService {
         Pageable sortedAndPageCondition = PageRequest.of(0, 25, Sort.by(carAnnouncementsRequestDTO.getFieldSortName()).descending());
         List<Car> carsNoPrice = carRepository.findAll(querySpec);
         List<Long> ids = carsNoPrice.stream().map(Car::getId).toList();
-        Long left = carAnnouncementsRequestDTO.getMinPrice() == null ? 0 : carAnnouncementsRequestDTO.getMinPrice();
-        Long right = carAnnouncementsRequestDTO.getMaxPrice() == null ? Long.MAX_VALUE : carAnnouncementsRequestDTO.getMaxPrice();
         if (carAnnouncementsRequestDTO.getState() == null) {
-            return carRepository.findByIdInAndAnnouncementPriceBetween(
-                    ids, left, right, sortedAndPageCondition
-            ).getTotalPages();
+            return carRepository.findByIdIn(ids, sortedAndPageCondition).getTotalPages();
         } else {
-            return carRepository.findByIdInAndAnnouncementPriceBetweenAndState(
-                    ids, left, right, carAnnouncementsRequestDTO.getState(), sortedAndPageCondition
-            ).getTotalPages();
+            return carRepository.findByIdInAndState(ids, carAnnouncementsRequestDTO.getState(), sortedAndPageCondition).getTotalPages();
         }
     }
 
-    private Specification<Car> createSpec(List<String> brands,
-                                          List<String> models,
-                                          List<Integer> transmissions,
-                                          List<Integer> gears,
-                                          Integer minEngineCapacity,
-                                          Integer maxEngineCapacity,
-                                          Integer minEnginePower,
-                                          Integer maxEnginePower,
-                                          List<Integer> colors,
-                                          List<String> mileages,
-                                          List<Integer> performances) {
+    private Specification<Car> createSpec(List<String> brands, List<String> models, List<Integer> transmissions, List<Integer> gears, Integer minEngineCapacity, Integer maxEngineCapacity, Integer minEnginePower, Integer maxEnginePower, Long minPrice, Long maxPrice, List<String> colors, List<Integer> mileages, List<String> performances) {
         return (root, query, criteriaBuilder) -> {
             if (brands != null && !brands.isEmpty()) {
                 criteriaBuilder.and(createPredicateByList(brands, "brand", root, criteriaBuilder));
@@ -168,6 +138,10 @@ public class AnnouncementFinderService {
                 criteriaBuilder.and(createPredicateBetween(minEngineCapacity, maxEngineCapacity, "engineCapacity", root, criteriaBuilder));
             }
 
+            if (maxPrice != null && minPrice != null) {
+                criteriaBuilder.and(createPredicateBetween(minEnginePower, maxEnginePower, "enginePower", root, criteriaBuilder));
+            }
+
             if (maxEnginePower != null && minEnginePower != null) {
                 criteriaBuilder.and(createPredicateBetween(minEnginePower, maxEnginePower, "enginePower", root, criteriaBuilder));
             }
@@ -189,39 +163,16 @@ public class AnnouncementFinderService {
         return detailRepository.findAll(querySpec);
     }
 
-    public List<CarDTO> getCarsAnnouncementsDTOByCarAnnouncementsRequestDTO(
-            @RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO,
-            Integer pageNUmber
-    ) {
+    public List<CarDTO> getCarsAnnouncementsDTOByCarAnnouncementsRequestDTO(@RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO, Integer pageNumber) {
         log.info("request = {}", carAnnouncementsRequestDTO);
-        List<Car> cars = getCarsAnnouncementsByCarAnnouncementsRequestDTO(carAnnouncementsRequestDTO, pageNUmber);
+        List<Car> cars = getCarsAnnouncementsByCarAnnouncementsRequestDTO(carAnnouncementsRequestDTO, pageNumber);
         log.info("get cars = {}", cars);
         return cars.stream().map(car -> Mappers.getMapper(DTOMapper.class).carToCarDto(car)).toList();
     }
 
-    public List<Car> getCarsAnnouncementsByCarAnnouncementsRequestDTO(
-            CarAnnouncementsRequestDTO carAnnouncementsRequestDTO,
-            Integer pageNUmber
-    ) {
+    public List<Car> getCarsAnnouncementsByCarAnnouncementsRequestDTO(CarAnnouncementsRequestDTO carAnnouncementsRequestDTO, Integer pageNumber) {
         log.info("request = {}", carAnnouncementsRequestDTO);
-        List<Car> cars = this.findCarsByParameters(
-                carAnnouncementsRequestDTO.getBrand(),
-                carAnnouncementsRequestDTO.getModel(),
-                carAnnouncementsRequestDTO.getTransmission(),
-                carAnnouncementsRequestDTO.getGear(),
-                carAnnouncementsRequestDTO.getMinEngineCapacity(),
-                carAnnouncementsRequestDTO.getMaxEngineCapacity(),
-                carAnnouncementsRequestDTO.getMinEnginePower(),
-                carAnnouncementsRequestDTO.getMaxEnginePower(),
-                carAnnouncementsRequestDTO.getColor(),
-                carAnnouncementsRequestDTO.getMileage(),
-                carAnnouncementsRequestDTO.getPerformance(),
-                carAnnouncementsRequestDTO.getMinPrice(),
-                carAnnouncementsRequestDTO.getMaxPrice(),
-                carAnnouncementsRequestDTO.getState(),
-                carAnnouncementsRequestDTO.getFieldSortName() != null ? carAnnouncementsRequestDTO.getFieldSortName() : "model",
-                pageNUmber
-        );
+        List<Car> cars = this.findCarsByParameters(carAnnouncementsRequestDTO.getBrand(), carAnnouncementsRequestDTO.getModel(), carAnnouncementsRequestDTO.getTransmission(), carAnnouncementsRequestDTO.getGear(), carAnnouncementsRequestDTO.getMinEngineCapacity(), carAnnouncementsRequestDTO.getMaxEngineCapacity(), carAnnouncementsRequestDTO.getMinEnginePower(), carAnnouncementsRequestDTO.getMaxEnginePower(), carAnnouncementsRequestDTO.getColor(), carAnnouncementsRequestDTO.getMileage(), carAnnouncementsRequestDTO.getPerformance(), carAnnouncementsRequestDTO.getMinPrice(), carAnnouncementsRequestDTO.getMaxPrice(), carAnnouncementsRequestDTO.getState(), carAnnouncementsRequestDTO.getFieldSortName() != null ? carAnnouncementsRequestDTO.getFieldSortName() : "model", pageNumber);
 
         log.info("get cars = {}", cars);
         return cars;

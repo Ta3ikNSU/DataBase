@@ -24,8 +24,8 @@ Content-Type: application/json
   "gear": 1,
   "engineCapacity": 2,
   "enginePower": 100,
-  "color": 124124,
-  "mileage": "mileage",
+  "color": "green",
+  "mileage": 999999,
   "vinNumber": 12345,
   "description": "description",
   "region": 123,
@@ -44,15 +44,15 @@ Content-Type: application/json
   "brand" : "Lada",
   "model": "Largus",
   "transmission": 1,
-  "gear": 1,
+  "gear": "1",
   "engineCapacity": 2,
   "enginePower": 100,
-  "color": 124124,
-  "mileage": "mileage",
-  "vinNumber": 12345,
+  "color": "blue",
+  "mileage": 228322,
+  "vinNumber": 54321,
   "description": "description",
-  "region": 123,
-  "price": 225000
+  "region": 42,
+  "price": 52000
 }
 
 ###

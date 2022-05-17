@@ -11,11 +11,7 @@ import java.util.Optional;
 @Repository
 public interface AccidentRepository {
 
+    // Критерий (Запрос с подзапросом)
     @Query("select a from Accident a where (select c from Car c where c.vinNumber = :vin) member a.cars")
     Optional<Accident> countAccidentByVinNumber(@Param("vin") Long vin);
-
-    // список автомобилей по количеству дтп
-
-    @Query("select a. from Accident a")
-    List<Object[]> searchСarsWithMostAccidents();
 }
