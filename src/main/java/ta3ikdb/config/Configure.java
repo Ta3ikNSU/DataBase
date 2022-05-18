@@ -3,8 +3,12 @@ package ta3ikdb.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
@@ -33,12 +37,5 @@ public class Configure {
 
         return dataSource;
     }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        DataSource dataSource = dataSource();
-        return new JdbcTemplate(dataSource);
-    }
-
 
 }

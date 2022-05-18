@@ -24,7 +24,6 @@ public class AuthController {
     @Autowired
     ValidationService validationService;
 
-
     // авторизация
     @PostMapping("/auth")
     public OkResponseDTO auth(@RequestBody AuthRequestDTO authRequestDTO) {

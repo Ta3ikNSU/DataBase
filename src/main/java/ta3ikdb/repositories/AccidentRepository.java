@@ -1,5 +1,6 @@
 package ta3ikdb.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AccidentRepository {
+public interface AccidentRepository extends JpaRepository<Accident, Long> {
 
     // Критерий (Запрос с подзапросом)
     @Query("select a from Accident a where (select c from Car c where c.vinNumber = :vin) member a.cars")
-    Optional<Accident> countAccidentByVinNumber(@Param("vin") Long vin);
+    List<Accident> accidentsByVinNumber(@Param("vin") Long vin);
 }

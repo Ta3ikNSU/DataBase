@@ -22,4 +22,7 @@ public class Accident {
     @ManyToMany
     List<Car> cars;
 
+    public Accident(List<Car> cars){
+        this.cars.addAll(cars);
+    }
 }
