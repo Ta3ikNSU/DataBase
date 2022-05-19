@@ -31,8 +31,9 @@ public class AuthService {
             } else {
                 log.info("user = {}, {} enter incorrect password", mail, password);
             }
+        } else {
+            log.error("user = {}, {} not exist", mail, password);
         }
-        log.error("user = {}, {} not exist", mail, password);
         return false;
     }
 

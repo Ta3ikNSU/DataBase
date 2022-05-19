@@ -22,6 +22,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @JoinColumn
+    @OneToOne
+    private Profile profile;
+
     public User(String mail, String password) {
         this.mail = mail;
         this.password = password;
