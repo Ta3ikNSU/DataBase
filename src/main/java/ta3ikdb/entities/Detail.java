@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "detail", schema = "public")
 @ToString
 public class Detail{
     @Id

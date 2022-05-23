@@ -8,9 +8,7 @@ import ta3ikdb.DTO.ReviewsResponseDTO;
 public class ReviewController {
 
     @PostMapping
-    public ReviewsResponseDTO getReviewsByCarParams(){
-        // TODO()
-
+    public ReviewsResponseDTO getReviewsByCarParams() {
         return null;
     }
 }

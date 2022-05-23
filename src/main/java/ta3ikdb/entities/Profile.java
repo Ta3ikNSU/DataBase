@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "profile", schema = "public")
 @ToString
 public class Profile {
     @Id

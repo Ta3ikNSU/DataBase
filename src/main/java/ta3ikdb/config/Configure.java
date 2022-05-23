@@ -28,6 +28,7 @@ public class Configure {
 
     @Bean
     public DataSource dataSource() {
+        System.out.println("Configure");
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName(driver);

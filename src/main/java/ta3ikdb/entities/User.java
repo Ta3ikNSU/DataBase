@@ -22,6 +22,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    // Критерий 1 : 1
     @JoinColumn
     @OneToOne
     private Profile profile;

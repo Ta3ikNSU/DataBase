@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "car", schema = "public")
 @ToString
 public class Car implements Comparable<Car> {
     @Id

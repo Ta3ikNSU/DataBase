@@ -4,16 +4,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.TestPropertySource;
 import ta3ikdb.DTO.OkResponseDTO;
 import ta3ikdb.DTO.RegisterRequestDTO;
+import ta3ikdb.config.TestConfig;
 import ta3ikdb.entities.User;
 import ta3ikdb.repositories.UserRepository;
 
 import java.util.Optional;
 
+@TestPropertySource(locations="classpath:application.properties")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = DbApplication.class)
+@Import(TestConfig.class)
 class AuthTest extends AbstractComponentTest {
 
     @Autowired

@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "accident", schema = "public")
 @ToString
 public class Accident {
     @Id
