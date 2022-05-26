@@ -1,20 +1,21 @@
 package ta3ikdb;
 
+import config.TestConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.*;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 import ta3ikdb.DTO.RegisterRequestDTO;
-import ta3ikdb.config.TestConfig;
 import ta3ikdb.entities.Car;
 
 import java.sql.ResultSet;
@@ -25,8 +26,8 @@ import java.util.Random;
 import java.util.UUID;
 
 @TestPropertySource(locations="classpath:application.properties")
-@SpringBootTest
-@Import(TestConfig.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = TestConfig.class)
 public class AbstractComponentTest {
     protected final String mail = "test_mail@mail.com";
     protected final String password = "hard_password12345678";
@@ -111,10 +112,5 @@ public class AbstractComponentTest {
                 .model(randomString())
                 .vinNumber(generateVinNumber())
                 .build();
-    }
-
-    @Test
-    public void testContext(){
-
     }
 }

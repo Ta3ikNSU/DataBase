@@ -3,8 +3,6 @@ package ta3ikdb.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

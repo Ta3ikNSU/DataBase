@@ -1,0 +1,1 @@
+create index announcement_price_idx on announcement(price);

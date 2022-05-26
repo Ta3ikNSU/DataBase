@@ -25,6 +25,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnnouncementFinderService {
@@ -39,7 +40,7 @@ public class AnnouncementFinderService {
     private <T> Predicate createPredicateByList(List<T> values, String name, Root<Car> root, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
         if (values != null && !values.isEmpty()) {
-            predicates = values.stream().map((value) -> criteriaBuilder.equal(root.get(name), value)).toList();
+            predicates = values.stream().map((value) -> criteriaBuilder.equal(root.get(name), value)).collect(Collectors.toList());
         }
         return criteriaBuilder.or(predicates.toArray(Predicate[]::new));
     }
@@ -62,14 +63,14 @@ public class AnnouncementFinderService {
         Specification<Car> querySpec = createSpec(brands, models, transmissions, gears, minEngineCapacity, maxEngineCapacity, minEnginePower, maxEnginePower, left, right, colors, mileages, performances);
         Pageable sortedAndPageCondition = PageRequest.of(pageNumber, 25, Sort.by(fieldname).descending());
         List<Car> carsNoPrice = carRepository.findAll(querySpec);
-        List<Long> ids = carsNoPrice.stream().map(Car::getId).toList();
+        List<Long> ids = carsNoPrice.stream().map(Car::getId).collect(Collectors.toList());
         Page<Car> cars;
         if (state == null) {
             cars = carRepository.findByIdIn(ids, sortedAndPageCondition);
         } else {
             cars = carRepository.findByIdInAndState(ids, state, sortedAndPageCondition);
         }
-        return cars.stream().toList();
+        return cars.stream().collect(Collectors.toList());
     }
 
     public  Integer getAnnouncementsPagesCount(CarAnnouncementsRequestDTO carAnnouncementsRequestDTO){
@@ -93,7 +94,7 @@ public class AnnouncementFinderService {
         );
         Pageable sortedAndPageCondition = PageRequest.of(0, 25, Sort.by(carAnnouncementsRequestDTO.getFieldSortName()).descending());
         List<Car> carsNoPrice = carRepository.findAll(querySpec);
-        List<Long> ids = carsNoPrice.stream().map(Car::getId).toList();
+        List<Long> ids = carsNoPrice.stream().map(Car::getId).collect(Collectors.toList());
         if (carAnnouncementsRequestDTO.getState() == null) {
             return carRepository.findByIdIn(ids, sortedAndPageCondition).getTotalPages();
         } else {
@@ -167,7 +168,7 @@ public class AnnouncementFinderService {
         log.info("request = {}", carAnnouncementsRequestDTO);
         List<Car> cars = getCarsAnnouncementsByCarAnnouncementsRequestDTO(carAnnouncementsRequestDTO, pageNumber);
         log.info("get cars = {}", cars);
-        return cars.stream().map(car -> Mappers.getMapper(DTOMapper.class).carToCarDto(car)).toList();
+        return cars.stream().map(car -> Mappers.getMapper(DTOMapper.class).carToCarDto(car)).collect(Collectors.toList());
     }
 
     public List<Car> getCarsAnnouncementsByCarAnnouncementsRequestDTO(CarAnnouncementsRequestDTO carAnnouncementsRequestDTO, Integer pageNumber) {

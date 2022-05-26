@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import ta3ikdb.entities.Accident;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface AccidentRepository extends JpaRepository<Accident, Long> {
