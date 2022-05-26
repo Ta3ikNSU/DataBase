@@ -2,10 +2,8 @@ version: '2'
 
 services:
   app:
-    image: 'backend_db'
     build:
-      context: src
-      dockerfile: Dockerfile
+      context: .
     ports:
       - "8080:8081"
     depends_on:
