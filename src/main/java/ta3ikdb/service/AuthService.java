@@ -4,14 +4,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ta3ikdb.entities.Profile;
 import ta3ikdb.entities.User;
 import ta3ikdb.repositories.ProfileRepository;
 import ta3ikdb.repositories.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@EnableTransactionManagement
 public class AuthService {
 
     private final Logger log =  LogManager.getLogger();
@@ -38,6 +41,7 @@ public class AuthService {
     }
 
 
+    @Transactional
     public boolean register(String mail, String password) {
         userRepository.save(new User(mail, password));
         profileRepository.save(new Profile(mail, mail));

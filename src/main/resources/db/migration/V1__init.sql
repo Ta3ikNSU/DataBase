@@ -9,7 +9,7 @@ create table announcement
     id          bigint not null primary key,
     close_date  timestamp,
     photos_list varchar(255),
-    price       bigint,
+    price       bigint check (price > 0),
     region      integer,
     start_date  timestamp,
     status      integer

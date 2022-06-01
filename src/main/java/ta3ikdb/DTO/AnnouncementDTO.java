@@ -22,10 +22,10 @@ public class AnnouncementDTO {
     Integer region;
 
     @JsonProperty("startDate")
-    Timestamp startDate;
+    String startDate;
 
     @JsonProperty("endDate")
-    Timestamp endDate;
+    String endDate;
 
     @JsonProperty("state")
     AnnouncementState status;
