@@ -1,5 +1,6 @@
 package ta3ikdb.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,8 @@ import ta3ikdb.service.ValidationService;
 
 @RestController
 @RequestMapping(value = "/authorize")
+@Slf4j
 public class AuthController {
-
-    private final Logger log =  LogManager.getLogger();
 
     @Autowired
     AuthService authService;
@@ -31,12 +31,14 @@ public class AuthController {
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
         boolean isSuccess = authService.auth(mail, password);
+        log.info("auth response : {}", isSuccess);
         return new OkResponseDTO(isSuccess);
     }
 
     // регистрация
     @PostMapping("/register")
     public OkResponseDTO register(@RequestBody AuthRequestDTO authRequestDTO) {
+        log.info("Register auth request : {}", authRequestDTO);
         String mail = authRequestDTO.getMail();
         String password = authRequestDTO.getPassword();
         if (!validationService.validateRegister(mail)) {

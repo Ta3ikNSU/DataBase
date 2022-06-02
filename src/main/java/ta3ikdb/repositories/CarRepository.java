@@ -24,5 +24,5 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
     @Query("select c from Car c where c.id in :ids ")
     Page<Car> findByIdIn(@Param("ids") Collection<Long> ids, Pageable pageable);
 
-
+    Car save(Car entity);
 }

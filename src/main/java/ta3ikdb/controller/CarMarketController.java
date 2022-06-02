@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import ta3ikdb.DTO.*;
 import ta3ikdb.entities.Announcement;
@@ -34,6 +35,9 @@ public class CarMarketController {
 
     @Autowired
     AnnouncementRepository announcementRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     // все объявления по фильтру
     @PostMapping("/announcements")
@@ -97,6 +101,7 @@ public class CarMarketController {
     public Integer getPageCount(@RequestBody CarAnnouncementsRequestDTO carAnnouncementsRequestDTO) {
         return announcementFinderService.getAnnouncementsPagesCount(carAnnouncementsRequestDTO);
     }
+
 
 
 }

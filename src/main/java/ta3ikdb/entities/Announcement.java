@@ -15,8 +15,8 @@ import java.sql.Timestamp;
 @ToString
 public class Announcement {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Column
     private Integer region;

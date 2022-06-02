@@ -17,6 +17,8 @@ import java.sql.Timestamp;
 @Getter
 @ToString
 public class AnnouncementDTO {
+    @JsonProperty("id")
+    Long id;
 
     @JsonProperty("region")
     Integer region;
