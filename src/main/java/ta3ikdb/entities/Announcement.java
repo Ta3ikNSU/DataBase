@@ -1,5 +1,6 @@
 package ta3ikdb.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;

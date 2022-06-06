@@ -53,6 +53,10 @@ public class Profile {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Detail> announcementsDetail = new ArrayList<>();
 
+    @JoinColumn
+    @OneToOne
+    private User user;
+
     public Profile(String nickname, String mail) {
         this.nickname = nickname;
         this.mail = mail;

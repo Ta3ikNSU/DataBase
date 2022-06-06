@@ -1,5 +1,6 @@
 package ta3ikdb.service;
 
+import liquibase.pro.packaged.A;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mapstruct.factory.Mappers;
@@ -19,6 +20,7 @@ import ta3ikdb.entities.Detail;
 import ta3ikdb.mapper.DTOMapper;
 import ta3ikdb.repositories.CarRepository;
 import ta3ikdb.repositories.DetailRepository;
+import ta3ikdb.repositories.ProfileRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -36,6 +38,9 @@ public class AnnouncementFinderService {
 
     @Autowired
     DetailRepository detailRepository;
+
+    @Autowired
+    ProfileRepository profileRepository;
 
     private <T> Predicate createPredicateByList(List<T> values, String name, Root<Car> root, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
@@ -177,5 +182,9 @@ public class AnnouncementFinderService {
 
         log.info("get cars = {}", cars);
         return cars;
+    }
+
+    public List<CarDTO> getActualCarsAnnouncementsByMail(String mail){
+        return profileRepository.findByMail(mail).get().getAnnouncementsCar().stream().map(car -> Mappers.getMapper(DTOMapper.class).carToCarDto(car)).collect(Collectors.toList());
     }
 }

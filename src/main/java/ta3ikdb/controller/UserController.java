@@ -3,13 +3,14 @@ package ta3ikdb.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.web.bind.annotation.*;
+import ta3ikdb.DTO.CarAnnouncementsResponseDTO;
 import ta3ikdb.DTO.OkResponseDTO;
 import ta3ikdb.entities.Announcement;
 import ta3ikdb.entities.Profile;
 import ta3ikdb.repositories.AnnouncementRepository;
 import ta3ikdb.repositories.ProfileRepository;
+import ta3ikdb.service.AnnouncementFinderService;
 
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ public class UserController {
     @Autowired
     AnnouncementRepository announcementRepository;
 
+    @Autowired
+    AnnouncementFinderService announcementFinderService;
 
     @PostMapping(value = "/{mail}/{announcement_id}")
     public OkResponseDTO addFavoriteAnnouncement(@PathVariable String mail, @PathVariable String announcement_id) {
@@ -43,7 +46,11 @@ public class UserController {
         Long profileId = optionalProfile.get().getId();
         Long announcementId = optionalAnnouncement.get().getId();
         String sql = "insert into profile_favorite_announcement_car (profile_id, favorite_announcement_car_id) values (?, ?) ";
-        jdbcTemplate.update(sql, profileId, announcementId);
+        try {
+            jdbcTemplate.update(sql, profileId, announcementId);
+        } catch (Exception ex){
+            return new OkResponseDTO(false);
+        }
         return new OkResponseDTO(true);
     }
 
@@ -65,5 +72,10 @@ public class UserController {
         String sql = "delete from profile_favorite_announcement_car where profile_id = ? and favorite_announcement_car_id = ?";
         jdbcTemplate.update(sql, profileId, announcementId);
         return new OkResponseDTO(true);
+    }
+
+    @PostMapping(value = "/announcements/{mail}")
+    public CarAnnouncementsResponseDTO getUserAnnouncements(@PathVariable String mail){
+        return new CarAnnouncementsResponseDTO(announcementFinderService.getActualCarsAnnouncementsByMail(mail));
     }
 }

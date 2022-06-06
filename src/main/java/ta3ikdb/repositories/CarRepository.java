@@ -11,6 +11,7 @@ import ta3ikdb.entities.AnnouncementState;
 import ta3ikdb.entities.Car;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor<Car>, PagingAndSortingRepository<Car, Long> {
