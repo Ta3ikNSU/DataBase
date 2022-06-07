@@ -19,7 +19,6 @@ import java.util.Optional;
 @Slf4j
 public class AuthService {
 
-
     @Autowired
     UserRepository userRepository;
 

@@ -34,7 +34,9 @@ public class AccidentController {
     List<Object[]> getAccidentTop() {
 
         String sql = "select c.brand as brand, c.model as model, count(*) as car_accidents " +
-                "from car c left outer join accident_cars on c.id = accident_cars.cars_id group by c.brand, c.model";
+                "from car c left outer join accident_cars on c.id = accident_cars.cars_id " +
+                "group by c.brand, c.model";
+
         return jdbcTemplate.queryForList(sql).stream().map(row -> {
             Object[] array = new Object[3];
             array[0] = row.get("brand");

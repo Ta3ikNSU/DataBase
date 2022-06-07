@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import ta3ikdb.DTO.CarAnnouncementsResponseDTO;
 import ta3ikdb.DTO.OkResponseDTO;
 import ta3ikdb.entities.Announcement;
+import ta3ikdb.entities.AnnouncementState;
 import ta3ikdb.entities.Profile;
 import ta3ikdb.repositories.AnnouncementRepository;
 import ta3ikdb.repositories.ProfileRepository;
 import ta3ikdb.service.AnnouncementFinderService;
+import ta3ikdb.service.ProfileService;
+import ta3ikdb.service.ValidationService;
 
 import java.util.Optional;
 
@@ -30,7 +33,13 @@ public class UserController {
     @Autowired
     AnnouncementFinderService announcementFinderService;
 
-    @PostMapping(value = "/{mail}/{announcement_id}")
+    @Autowired
+    ProfileService profileService;
+
+    @Autowired
+    ValidationService validationService;
+
+    @PostMapping(value = "/favorites/{mail}/{announcement_id}")
     public OkResponseDTO addFavoriteAnnouncement(@PathVariable String mail, @PathVariable String announcement_id) {
         log.info("add {}:{}", mail, announcement_id);
         Optional<Profile> optionalProfile = profileRepository.findByMail(mail);
@@ -54,7 +63,7 @@ public class UserController {
         return new OkResponseDTO(true);
     }
 
-    @DeleteMapping(value = "/{mail}/{announcement_id}")
+    @DeleteMapping(value = "/favorites/{mail}/{announcement_id}")
     public OkResponseDTO deleteFavoriteAnnouncement(@PathVariable String mail, @PathVariable String announcement_id) {
         log.info("delete {}:{}", mail, announcement_id);
         Optional<Profile> optionalProfile = profileRepository.findByMail(mail);
@@ -75,7 +84,21 @@ public class UserController {
     }
 
     @PostMapping(value = "/announcements/{mail}")
-    public CarAnnouncementsResponseDTO getUserAnnouncements(@PathVariable String mail){
+    public CarAnnouncementsResponseDTO getUserAnnouncements(@PathVariable String mail) {
         return new CarAnnouncementsResponseDTO(announcementFinderService.getActualCarsAnnouncementsByMail(mail));
+    }
+
+    @DeleteMapping(value = "/{mail}/{announcement_id}")
+    public void deleteAnnouncementById(@PathVariable String mail, @PathVariable Long announcement_id) {
+        if (validationService.isUserOwnerAnnouncement(mail, announcement_id)) {
+            profileService.updateAnnouncementStateById(announcement_id, AnnouncementState.DELETE);
+        }
+    }
+
+    @PostMapping(value = "/{mail}/{announcement_id}")
+    public void soldAnnouncementById(@PathVariable String mail, @PathVariable Long announcement_id) {
+        if (validationService.isUserOwnerAnnouncement(mail, announcement_id)) {
+            profileService.updateAnnouncementStateById(announcement_id, AnnouncementState.SOLD);
+        }
     }
 }
