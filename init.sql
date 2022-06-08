@@ -1,1 +1,1 @@
-create database db;
+create database dbTable;
