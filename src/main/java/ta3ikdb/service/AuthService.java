@@ -56,7 +56,7 @@ public class AuthService {
 
     @Transactional
     public boolean register(String mail, String password) {
-        jdbcTemplate.update("insert into profile (mail, nickname, register_date) values (?,?,?)", mail, mail, new Timestamp(System.currentTimeMillis()));
+        jdbcTemplate.update("insert into profile (mail, nickname, register_date, role) values (?,?,?,?)", mail, mail, new Timestamp(System.currentTimeMillis()), "USER");
         Long id = jdbcTemplate.queryForObject("select id from profile where mail = ?", Long.class, mail);
         jdbcTemplate.update("insert into user_lk (mail, password, profile_id) values (?,?,?)", mail, password, id);
         log.info("user = {}, {} success register", mail, password);

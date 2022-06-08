@@ -6,12 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "review", schema = "public")
 @ToString
+@Setter
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +21,14 @@ public class Review {
     private Long authorId;
 
     @Column
-    private Integer grade;
+    private String description;
 
     @ManyToOne
     private Car car;
 
-    public Review(Long authorId, Integer grade,Car car) {
+    public Review(Long authorId, String description,Car car) {
         this.authorId = authorId;
-        this.grade = grade;
+        this.description = description;
         this.car = car;
     }
 }

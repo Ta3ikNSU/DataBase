@@ -8,6 +8,7 @@ import ta3ikdb.entities.Car;
 import ta3ikdb.entities.Review;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -23,5 +24,16 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "inner join review r on c.id = r.car_id " +
             "where a.status = 0", nativeQuery = true)
     List<Car> getCarsWithOpenAnnouncement();
+
+    @Query(value = "select c.* " +
+            "from car c inner join announcement a on a.id = c.announcement_id " +
+            "inner join review r on c.id = r.car_id " +
+            "where a.status = 0 group by c.id having count(r.id) > 1", nativeQuery = true)
+    List<Car> getCarsWithOpenAnnouncementWithMoreThenOneReview();
+
+    Optional<Review> findReviewById(Long id);
+
+    long deleteByIdEquals(Long id);
+
 
 }

@@ -70,7 +70,8 @@ create table profile
     id            bigserial unique primary key,
     mail          varchar(255) not null,
     nickname      varchar(255),
-    register_date timestamp    not null
+    register_date timestamp    not null,
+    role          varchar(255) not null
 );
 
 create table profile_announcements_car
@@ -120,7 +121,7 @@ create table review
 (
     id        bigserial primary key,
     author_id bigint not null,
-    grade     integer,
+    description     varchar(1024),
     car_id    bigint references car
 );
 

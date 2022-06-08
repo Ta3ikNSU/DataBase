@@ -30,8 +30,7 @@ public class Profile {
     private String nickname;
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Car> favoriteAnnouncementCar = new ArrayList<>();
+    private String role;
 
     @Column
     @OneToMany(cascade = CascadeType.ALL)
@@ -40,6 +39,10 @@ public class Profile {
     @Column
     @OneToMany(cascade = CascadeType.ALL)
     private List<Car> announcementsCar = new ArrayList<>();
+
+    @Column
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Car> favoriteAnnouncementCar = new ArrayList<>();
 
     @Column
     @OneToMany(cascade = CascadeType.ALL)
