@@ -3,10 +3,8 @@ package ta3ikdb.DTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor(onConstructor = @__(@JsonCreator))
@@ -14,6 +12,8 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @ToString
+@Builder
+@JsonDeserialize(builder = CreateCarAnnouncementsResponseDTO.CreateCarAnnouncementsResponseDTOBuilder.class)
 public class CreateCarAnnouncementsResponseDTO {
         @JsonProperty("carDTO")
         @Getter

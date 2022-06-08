@@ -4,9 +4,7 @@ import config.TestConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -41,7 +39,6 @@ public class AbstractComponentTest {
     int port;
 
     RestTemplate restTemplate = new RestTemplate();
-
 
     protected <RequestType, ResponseType> ResponseType sendGetRequest(RequestType request, Class<ResponseType> responseClass, String path) {
         return sendRequest(request, responseClass, HttpMethod.GET, path);
@@ -97,8 +94,12 @@ public class AbstractComponentTest {
         return RegisterRequestDTO.builder().mail(mail).password(password).build();
     }
 
-    protected Long generateVinNumber() {
+    protected Long randomLong() {
         return new Random().nextLong();
+    }
+
+    protected int randomInt() {
+        return new Random().nextInt();
     }
 
     protected String randomString() {
@@ -110,7 +111,7 @@ public class AbstractComponentTest {
                 .builder()
                 .brand(randomString())
                 .model(randomString())
-                .vinNumber(generateVinNumber())
+                .vinNumber(randomLong())
                 .build();
     }
 }

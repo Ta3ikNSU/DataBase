@@ -3,6 +3,7 @@ package ta3ikdb.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Accident {
 
     @Column
     @ManyToMany
-    List<Car> cars;
+    List<Car> cars = new ArrayList<>();
 
     public Accident(List<Car> cars){
         this.cars.addAll(cars);

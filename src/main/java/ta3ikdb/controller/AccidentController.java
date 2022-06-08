@@ -5,11 +5,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import ta3ikdb.DTO.AccidentDTO;
 import ta3ikdb.DTO.AccidentsDTO;
+import ta3ikdb.DTO.OkResponseDTO;
 import ta3ikdb.entities.Accident;
 import ta3ikdb.entities.Car;
 import ta3ikdb.repositories.AccidentRepository;
 import ta3ikdb.repositories.CarRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,12 +49,14 @@ public class AccidentController {
     }
 
     @PutMapping("")
-    void addAccident(@RequestBody AccidentDTO accidentDTO) {
-        List<Car> cars = accidentDTO.getVinNumbers().stream().map(vin -> {
+    OkResponseDTO addAccident(@RequestBody AccidentDTO accidentDTO) {
+        List<Car> cars = new ArrayList<>();
+        accidentDTO.getVinNumbers().forEach(vin -> {
             Optional<Car> optionalCar = carRepository.getCarByVinNumber(vin);
-            return optionalCar.orElse(null);
-        }).filter(Objects::nonNull).collect(Collectors.toList());
+            optionalCar.ifPresent(cars::add);
+        });
         accidentRepository.save(new Accident(cars));
+        return new OkResponseDTO(true);
     }
 
     @PostMapping("{vin}")

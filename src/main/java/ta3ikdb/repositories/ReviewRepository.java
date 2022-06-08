@@ -18,4 +18,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r where r.car.brand=:brand and r.car.model=:model")
     List<Review> findReviewsByCarBrandAndModel(@Param("brand") String brand, @Param("model") String model);
 
+    @Query(value = "select c.* " +
+            "from car c inner join announcement a on a.id = c.announcement_id " +
+            "inner join review r on c.id = r.car_id " +
+            "where a.status = 0", nativeQuery = true)
+    List<Car> getCarsWithOpenAnnouncement();
+
 }

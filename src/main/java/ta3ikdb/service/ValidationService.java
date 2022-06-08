@@ -9,6 +9,7 @@ import ta3ikdb.entities.User;
 import ta3ikdb.repositories.ProfileRepository;
 import ta3ikdb.repositories.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,8 +25,9 @@ public class ValidationService {
     JdbcTemplate jdbcTemplate;
 
     public boolean validateRegister(String mail){
-        Optional<User> userOptional = userRepository.findByMail(mail);
-        return userOptional.isEmpty();
+//        Optional<User> userOptional = userRepository.findByMail(mail);
+        Integer count = jdbcTemplate.queryForObject("select count(*) from user_lk where mail = ?", Integer.class, mail);
+        return !count.equals(1);
     }
 
     public boolean isUserOwnerAnnouncement(String mail, Long announcement_id){

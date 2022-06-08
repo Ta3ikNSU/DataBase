@@ -29,7 +29,10 @@ create table car
     performance     varchar(255),
     transmission    varchar(255),
     vin_number      bigint       not null,
-    announcement_id bigint references announcement
+    announcement_id bigint references announcement,
+    constraint fk_ann_id
+        foreign key (announcement_id)
+            references announcement (id)
 );
 
 create table accident_cars
@@ -64,7 +67,7 @@ create table detail
 
 create table profile
 (
-    id            bigserial primary key,
+    id            bigserial unique primary key,
     mail          varchar(255) not null,
     nickname      varchar(255),
     register_date timestamp    not null
@@ -73,13 +76,19 @@ create table profile
 create table profile_announcements_car
 (
     profile_id           bigint not null references profile,
-    announcements_car_id bigint not null unique references car
+    announcements_car_id bigint not null unique references car,
+    constraint fk_anncar_id
+        foreign key (announcements_car_id)
+            references announcement (id)
 );
 
 create table profile_announcements_detail
 (
     profile_id              bigint not null references profile,
-    announcements_detail_id bigint not null unique references detail
+    announcements_detail_id bigint not null unique references detail,
+    constraint fk_anndet_id
+        foreign key (announcements_detail_id)
+            references announcement (id)
 );
 
 
@@ -117,10 +126,13 @@ create table review
 
 create table user_lk
 (
-    id         bigserial primary key,
+    id         bigserial unique primary key,
     mail       varchar(255) not null unique,
     password   varchar(255) not null,
-    profile_id bigint references profile
+    profile_id bigint references profile,
+    constraint fk_profile
+        foreign key (profile_id)
+            references profile (id)
 );
 
 

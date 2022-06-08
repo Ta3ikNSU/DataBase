@@ -88,17 +88,10 @@ public class UserController {
         return new CarAnnouncementsResponseDTO(announcementFinderService.getActualCarsAnnouncementsByMail(mail));
     }
 
-    @DeleteMapping(value = "/{mail}/{announcement_id}")
-    public void deleteAnnouncementById(@PathVariable String mail, @PathVariable Long announcement_id) {
+    @PostMapping(value = "/{mail}/{announcement_id}/{state}")
+    public void updateAnnouncementStateById(@PathVariable String mail, @PathVariable Long announcement_id, @PathVariable AnnouncementState state) {
         if (validationService.isUserOwnerAnnouncement(mail, announcement_id)) {
-            profileService.updateAnnouncementStateById(announcement_id, AnnouncementState.DELETE);
-        }
-    }
-
-    @PostMapping(value = "/{mail}/{announcement_id}")
-    public void soldAnnouncementById(@PathVariable String mail, @PathVariable Long announcement_id) {
-        if (validationService.isUserOwnerAnnouncement(mail, announcement_id)) {
-            profileService.updateAnnouncementStateById(announcement_id, AnnouncementState.SOLD);
+            profileService.updateAnnouncementStateById(announcement_id, state);
         }
     }
 }

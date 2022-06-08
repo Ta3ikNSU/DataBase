@@ -3,16 +3,16 @@ package ta3ikdb.DTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @AllArgsConstructor(onConstructor = @__(@JsonCreator))
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@JsonDeserialize(builder = CreateCarAnnouncementsRequestDTO.CreateCarAnnouncementsRequestDTOBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+@Builder
 @ToString
 public class CreateCarAnnouncementsRequestDTO {
         @JsonProperty("mail")

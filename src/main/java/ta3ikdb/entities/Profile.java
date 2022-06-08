@@ -62,4 +62,10 @@ public class Profile {
         this.mail = mail;
         this.register_date = new Timestamp(System.currentTimeMillis());
     }
+
+    public Profile(String nickname, String mail, User user) {
+        this.nickname = nickname;
+        this.mail = mail;
+        this.register_date = new Timestamp(System.currentTimeMillis());
+    }
 }

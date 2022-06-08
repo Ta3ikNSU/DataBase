@@ -60,8 +60,10 @@ public class CarMarketController {
     // создать объявление
     @PutMapping("/create")
     public CreateCarAnnouncementsResponseDTO getCarAnnouncements(@RequestBody CreateCarAnnouncementsRequestDTO createCarAnnouncementsRequestDTO) {
-        Optional<Profile> optionalProfile = profileRepository.findByMail(createCarAnnouncementsRequestDTO.getMail());
-        if (optionalProfile.isEmpty()) {
+
+        Integer profile = jdbcTemplate.queryForObject("select count(*) from profile where mail = ?", Integer.class, createCarAnnouncementsRequestDTO.getMail());
+
+        if (profile== null || profile != 1) {
             return new CreateCarAnnouncementsResponseDTO(null);
         }
 
@@ -85,8 +87,10 @@ public class CarMarketController {
             carRepository.save(car);
         }
         announcementRepository.save(announcement);
-        Profile profile = optionalProfile.get();
-        profile.getFavoriteAnnouncementCar().add(car);
+
+        Long id = jdbcTemplate.queryForObject("select id from profile where mail = ?", Long.class, createCarAnnouncementsRequestDTO.getMail());
+
+//        jdbcTemplate.update("insert into profile_announcements_car (profile_id, announcements_car_id) values (?,?)", id, car.getAnnouncement().getId());
         return new CreateCarAnnouncementsResponseDTO(Mappers.getMapper(DTOMapper.class).carToCarDto(car));
     }
 
