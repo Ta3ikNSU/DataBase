@@ -22,3 +22,4 @@ services:
     environment:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
+      - POSTGRES_DB=db
