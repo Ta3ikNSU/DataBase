@@ -23,3 +23,5 @@ services:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
       - POSTGRES_DB=db
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
