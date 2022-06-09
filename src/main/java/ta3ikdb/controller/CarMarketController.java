@@ -59,7 +59,7 @@ public class CarMarketController {
 
     // создать объявление
     @PutMapping("/create")
-    public CreateCarAnnouncementsResponseDTO getCarAnnouncements(@RequestBody CreateCarAnnouncementsRequestDTO createCarAnnouncementsRequestDTO) {
+    public CreateCarAnnouncementsResponseDTO createCarAnnouncements(@RequestBody CreateCarAnnouncementsRequestDTO createCarAnnouncementsRequestDTO) {
 
         Integer profile = jdbcTemplate.queryForObject("select count(*) from profile where mail = ?", Integer.class, createCarAnnouncementsRequestDTO.getMail());
 

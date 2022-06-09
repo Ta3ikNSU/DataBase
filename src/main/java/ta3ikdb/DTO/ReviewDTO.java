@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @Builder(toBuilder = true)
 public class ReviewDTO {
-    @JsonProperty("description")
+    @JsonProperty("id")
     @Getter
     private Long id;
 
